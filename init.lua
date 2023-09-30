@@ -109,6 +109,10 @@ require('lazy').setup({
 
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
+
+      -- CUSTOM DENILSON CMP
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-calc",
     },
   },
 
@@ -224,7 +228,8 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'onedark',
+        -- theme = 'onedark',
+        theme = 'catppuccin',
         component_separators = '|',
         section_separators = '',
       },
@@ -708,6 +713,8 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = 'path' },
+    { name = 'calc' },
+    { name = 'buffer' },
   },
 }
 
