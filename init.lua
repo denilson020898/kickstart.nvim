@@ -113,7 +113,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -189,12 +189,31 @@ require('lazy').setup({
     },
   },
 
+  -- {
+  --   -- Theme inspired by Atom
+  --   'navarasu/onedark.nvim',
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'onedark'
+  --   end,
+  -- },
+
+  -- {
+  --   "folke/tokyonight.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = {},
+  --   config = function()
+  --     vim.cmd.colorscheme 'tokyonight'
+  --   end,
+  -- },
+
   {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    "catppuccin/nvim",
+    name = "catppuccin",
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'catppuccin'
     end,
   },
 
@@ -310,6 +329,9 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+-- CUSTOM DENILSON SETTINGS
+vim.wo.relativenumber = true
+
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
@@ -346,6 +368,22 @@ require('telescope').setup {
         ['<C-u>'] = false,
         ['<C-d>'] = false,
       },
+    },
+    sorting_strategy = "ascending",
+    layout_strategy = "vertical",
+    layout_config = {
+      prompt_position = 'top',
+      horizontal = {
+        width = 0.975,
+        height = 0.975,
+      },
+      vertical = {
+        width = 0.975,
+        height = 0.975,
+      },
+    },
+    file_ignore_patterns = {
+      "%.po"
     },
   },
 }
@@ -417,6 +455,8 @@ vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by 
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
+-- CUSTOM DENILSON KEYBINDINGS
+vim.keymap.set("n", "<space>tt", "<cmd>Telescope<cr>", { noremap = true })
 vim.keymap.set('n', '<space>d', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<space>f', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<space>r', require('telescope.builtin').resume, { desc = 'Resume Telescope' })
@@ -425,6 +465,12 @@ vim.keymap.set("v", ">", ">gv", { noremap = true })
 vim.keymap.set("v", "<", "<gv", { noremap = true })
 vim.keymap.set({ "n", "v" }, "<leader>.", "<cmd>HopAnywhere<cr>", { noremap = true })
 vim.keymap.set({ "n", "v" }, "<leader>m", "<cmd>HopWord<cr>", { noremap = true })
+vim.keymap.set("n", "<leader>s", require('custom/plugins/spectre').search_resume, { noremap = true })
+vim.keymap.set("n", "<space>s", require('spectre').open, { noremap = true })
+vim.keymap.set("n", "<space>sw", function() require('spectre').open_visual({ select_word = true }) end, { noremap = true })
+vim.keymap.set("v", "<space>s", "<cmd>lua require('spectre').open_visual()<cr>", { noremap = true })
+vim.keymap.set("n", "<space>sc", "viw:lua require('spectre').open_file_search()<cr>", { noremap = true })
+vim.keymap.set("n", "<space>gg", function() require('neogit').open() end, { noremap = true })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -620,7 +666,6 @@ local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
-
 cmp.setup {
   snippet = {
     expand = function(args)
