@@ -326,7 +326,7 @@ vim.wo.signcolumn = 'yes'
 
 -- Decrease update time
 vim.o.updatetime = 100
-vim.o.timeoutlen = 350
+vim.o.timeoutlen = 200
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -336,6 +336,12 @@ vim.o.termguicolors = true
 
 -- CUSTOM DENILSON SETTINGS
 vim.wo.relativenumber = true
+vim.cmd("autocmd Filetype cpp setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2")
+vim.cmd("autocmd Filetype c setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2")
+vim.cmd("autocmd Filetype wast setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2")
+vim.cmd("autocmd Filetype wat setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2")
+vim.cmd("autocmd Filetype lua setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2")
+vim.cmd("autocmd Filetype javascript setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2")
 
 -- [[ Basic Keymaps ]]
 
@@ -470,17 +476,40 @@ vim.keymap.set("v", ">", ">gv", { noremap = true })
 vim.keymap.set("v", "<", "<gv", { noremap = true })
 vim.keymap.set({ "n", "v" }, "<leader>.", "<cmd>HopAnywhere<cr>", { noremap = true })
 vim.keymap.set({ "n", "v" }, "<leader>m", "<cmd>HopWord<cr>", { noremap = true })
-vim.keymap.set("n", "<space>D", require('custom/plugins/spectre').search_resume,
+
+vim.keymap.set("n", "<space>c", function() require("treesitter-context").go_to_context() end, { silent = true })
+
+spectre_state = require('spectre.actions').get_state()
+is_file = spectre_state.query.is_file
+path = spectre_state.query.path
+replace_query = spectre_state.query.replace_query
+search_quey = spectre_state.query.search_quey
+
+search_resume = function()
+  spectre_state = require('spectre.actions').get_state()
+  is_file = spectre_state.query.is_file
+  path = spectre_state.query.path
+  replace_query = spectre_state.query.replace_query
+  search_query = spectre_state.query.search_query
+  require('spectre').open({
+    search_text = search_query,
+    replace_text = replace_query,
+    path = path,
+  })
+end
+
+vim.keymap.set("n", "<space>D", search_resume,
   { noremap = true, desc = 'reuse last spectre search' })
 vim.keymap.set("n", "<space>s", require('spectre').open, { noremap = true, desc = 'spectre search' })
 vim.keymap.set("n", "<space>sw", function() require('spectre').open_visual({ select_word = true }) end,
-  { noremap = true, desc = 'specte search current word' })
+  { noremap = true, desc = 'spectre search current word' })
 vim.keymap.set("v", "<space>s", "<cmd>lua require('spectre').open_visual()<cr>", { noremap = true })
 vim.keymap.set("n", "<space>sc", "viw:lua require('spectre').open_file_search()<cr>", { noremap = true })
 vim.keymap.set("n", "<space>gg", function() require('neogit').open() end, { noremap = true, desc = "neogit" })
 vim.keymap.set("n", "<space>gb", "<cmd>GitBlameToggle<cr>", { noremap = true })
 vim.keymap.set("n", "<space>go", "<cmd>GitBlameOpenCommitURL<cr>", { noremap = true })
-
+vim.keymap.set("n", "zh", "35zh", { noremap = true })
+vim.keymap.set("n", "zl", "35zl", { noremap = true })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true })
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true })
 vim.keymap.set("n", "{", "{zz", { noremap = true })
@@ -493,14 +522,22 @@ vim.keymap.set("n", "<C-i>", "<C-i>zz", { noremap = true })
 vim.keymap.set("n", "<C-o>", "<C-o>zz", { noremap = true })
 vim.keymap.set("n", "%", "%zz", { noremap = true })
 vim.keymap.set("n", "*", "*zz", { noremap = true })
+vim.keymap.set("n", "*", "*zz", { noremap = true })
 vim.keymap.set("n", "#", "#zz", { noremap = true })
 
 vim.api.nvim_create_autocmd("CmdLineLeave", {
-  callback = function ()
+  callback = function()
     vim.api.nvim_feedkeys("zz", "n", false)
   end
 })
 
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    if vim.fn.argv(0) == "" then
+      require("telescope.builtin").find_files()
+    end
+  end,
+})
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -651,7 +688,23 @@ local servers = {
   -- clangd = {},
   -- gopls = {},
   -- pyright = {},
-  -- rust_analyzer = {},
+  rust_analyzer = {
+    settings = {
+      ["rust-analyzer"] = {
+        diagnostics = {
+          enable = true,
+          disabled = { "unresolved-proc-macro" },
+          enableExperimental = true,
+        },
+        -- procMacro = { enable = true },
+        cargo = { allFeatures = true },
+        checkOnSave = {
+          command = "clippy",
+          extraArgs = { "--no-deps" },
+        },
+      },
+    },
+  },
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
@@ -688,6 +741,16 @@ mason_lspconfig.setup_handlers {
       filetypes = (servers[server_name] or {}).filetypes,
     }
   end,
+  -- if rust-tools is prefered, uncomment this
+  ["rust_analyzer"] = function()
+    require("rust-tools").setup {
+      server = {
+        on_attach = on_attach,
+        capabilities = capabilities,
+      },
+      filetypes = "rust"
+    }
+  end
 }
 
 -- [[ Configure nvim-cmp ]]
@@ -712,7 +775,6 @@ cmp.setup {
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete {},
     ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
     ['<Tab>'] = cmp.mapping(function(fallback)
