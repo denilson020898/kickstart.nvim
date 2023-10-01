@@ -212,12 +212,21 @@ require('lazy').setup({
   --   end,
   -- },
 
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
+  -- {
+  --   "catppuccin/nvim",
+  --   name = "catppuccin",
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'catppuccin'
+  --   end,
+  -- },
+
+  { 
+    "ellisonleao/gruvbox.nvim",
     priority = 1000,
+    setup = true,
     config = function()
-      vim.cmd.colorscheme 'catppuccin'
+      vim.cmd([[colorscheme gruvbox]])
     end,
   },
 
@@ -229,7 +238,7 @@ require('lazy').setup({
       options = {
         icons_enabled = false,
         -- theme = 'onedark',
-        theme = 'catppuccin',
+        -- theme = 'catppuccin',
         component_separators = '|',
         section_separators = '',
       },
@@ -335,7 +344,8 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 -- CUSTOM DENILSON SETTINGS
-vim.wo.relativenumber = true
+-- vim.wo.relativenumber = true
+vim.o.iskeyword = vim.o.iskeyword .. ",-" .. ",_"
 vim.cmd("autocmd Filetype cpp setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2")
 vim.cmd("autocmd Filetype c setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2")
 vim.cmd("autocmd Filetype wast setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2")
@@ -689,21 +699,21 @@ local servers = {
   -- gopls = {},
   -- pyright = {},
   rust_analyzer = {
-    settings = {
-      ["rust-analyzer"] = {
-        diagnostics = {
-          enable = true,
-          disabled = { "unresolved-proc-macro" },
-          enableExperimental = true,
-        },
-        -- procMacro = { enable = true },
-        cargo = { allFeatures = true },
-        checkOnSave = {
-          command = "clippy",
-          extraArgs = { "--no-deps" },
-        },
-      },
-    },
+    -- settings = {
+    --   ["rust-analyzer"] = {
+    --     diagnostics = {
+    --       enable = true,
+    --       disabled = { "unresolved-proc-macro" },
+    --       enableExperimental = true,
+    --     },
+    --     -- procMacro = { enable = true },
+    --     cargo = { allFeatures = true },
+    --     checkOnSave = {
+    --       command = "clippy",
+    --       extraArgs = { "--no-deps" },
+    --     },
+    --   },
+    -- },
   },
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
