@@ -748,6 +748,7 @@ mason_lspconfig.setup_handlers {
         on_attach = on_attach,
         capabilities = capabilities,
       },
+      settings = servers["rust_analyzer"],
       filetypes = "rust"
     }
   end
