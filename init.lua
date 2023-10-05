@@ -96,6 +96,13 @@ require('lazy').setup({
   },
 
   {
+    "ray-x/lsp_signature.nvim",
+    event = "VeryLazy",
+    opts = {},
+    config = function(_, opts) require'lsp_signature'.setup(opts) end
+  },
+
+  {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = {
@@ -291,7 +298,7 @@ require('lazy').setup({
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
   -- require 'kickstart.plugins.autoformat',
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
@@ -535,11 +542,16 @@ vim.keymap.set("n", "*", "*zz", { noremap = true })
 vim.keymap.set("n", "*", "*zz", { noremap = true })
 vim.keymap.set("n", "#", "#zz", { noremap = true })
 
-vim.api.nvim_create_autocmd("CmdLineLeave", {
-  callback = function()
-    vim.api.nvim_feedkeys("zz", "n", false)
-  end
-})
+vim.keymap.set("n", "<A-h>", "5<C-w><", { noremap = true })
+vim.keymap.set("n", "<A-j>", "5<C-w>-", { noremap = true })
+vim.keymap.set("n", "<A-k>", "5<C-w>+", { noremap = true })
+vim.keymap.set("n", "<A-l>", "5<C-w>>", { noremap = true })
+
+-- vim.api.nvim_create_autocmd("CmdLineLeave", {
+--   callback = function()
+--     vim.api.nvim_feedkeys("zz", "n", false)
+--   end
+-- })
 
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
@@ -635,6 +647,13 @@ local on_attach = function(_, bufnr)
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
+  require "lsp_signature".on_attach({
+    bind = true, -- This is mandatory, otherwise border config won't get registered.
+    handler_opts = {
+      border = "rounded"
+    }
+  }, bufnr)
+
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
@@ -699,21 +718,21 @@ local servers = {
   -- gopls = {},
   -- pyright = {},
   rust_analyzer = {
-    -- settings = {
-    --   ["rust-analyzer"] = {
-    --     diagnostics = {
-    --       enable = true,
-    --       disabled = { "unresolved-proc-macro" },
-    --       enableExperimental = true,
-    --     },
-    --     -- procMacro = { enable = true },
-    --     cargo = { allFeatures = true },
-    --     checkOnSave = {
-    --       command = "clippy",
-    --       extraArgs = { "--no-deps" },
-    --     },
-    --   },
-    -- },
+    settings = {
+      ["rust-analyzer"] = {
+        diagnostics = {
+          enable = true,
+          disabled = { "unresolved-proc-macro" },
+          enableExperimental = true,
+        },
+        -- procMacro = { enable = true },
+        cargo = { allFeatures = true },
+        checkOnSave = {
+          command = "clippy",
+          extraArgs = { "--no-deps" },
+        },
+      },
+    },
   },
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
