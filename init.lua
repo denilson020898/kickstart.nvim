@@ -298,7 +298,7 @@ require('lazy').setup({
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
-  -- require 'kickstart.plugins.autoformat',
+  require 'kickstart.plugins.autoformat',
   require 'kickstart.plugins.debug',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
@@ -495,7 +495,8 @@ vim.keymap.set("v", "<", "<gv", { noremap = true })
 vim.keymap.set({ "n", "v" }, "<leader>.", "<cmd>HopAnywhere<cr>", { noremap = true })
 vim.keymap.set({ "n", "v" }, "<leader>m", "<cmd>HopWord<cr>", { noremap = true })
 
-vim.keymap.set("n", "<space>c", function() require("treesitter-context").go_to_context() end, { silent = true })
+vim.keymap.set('n', '<space>k', "<cmd>RustHoverActions<cr>", {noremap = true})
+vim.keymap.set("n", "<space>c", function() require("treesitter-context").go_to_context() end, { silent = true, desc = 'parent treesitter context' })
 
 spectre_state = require('spectre.actions').get_state()
 is_file = spectre_state.query.is_file
@@ -553,13 +554,13 @@ vim.keymap.set("n", "<A-l>", "5<C-w>>", { noremap = true })
 --   end
 -- })
 
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    if vim.fn.argv(0) == "" then
-      require("telescope.builtin").find_files()
-    end
-  end,
-})
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--   callback = function()
+--     if vim.fn.argv(0) == "" then
+--       require("telescope.builtin").find_files()
+--     end
+--   end,
+-- })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
