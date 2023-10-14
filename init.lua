@@ -411,9 +411,9 @@ require('telescope').setup {
         height = 0.975,
       },
     },
-    file_ignore_patterns = {
-      "%.po"
-    },
+    -- file_ignore_patterns = {
+    --   "%.po"
+    -- },
   },
 }
 
@@ -495,35 +495,38 @@ vim.keymap.set("v", "<", "<gv", { noremap = true })
 vim.keymap.set({ "n", "v" }, "<leader>.", "<cmd>HopAnywhere<cr>", { noremap = true })
 vim.keymap.set({ "n", "v" }, "<leader>m", "<cmd>HopWord<cr>", { noremap = true })
 
+vim.keymap.set('n', '<space>q', require('telescope.builtin').quickfix, { desc = 'telescope quickfix' })
+vim.keymap.set('n', '<space>Q', require('telescope.builtin').quickfixhistory, { desc = 'telescope quickfix history' })
+
 vim.keymap.set('n', '<space>k', "<cmd>RustHoverActions<cr>", {noremap = true})
 vim.keymap.set("n", "<space>c", function() require("treesitter-context").go_to_context() end, { silent = true, desc = 'parent treesitter context' })
 
-spectre_state = require('spectre.actions').get_state()
-is_file = spectre_state.query.is_file
-path = spectre_state.query.path
-replace_query = spectre_state.query.replace_query
-search_quey = spectre_state.query.search_quey
-
-search_resume = function()
-  spectre_state = require('spectre.actions').get_state()
-  is_file = spectre_state.query.is_file
-  path = spectre_state.query.path
-  replace_query = spectre_state.query.replace_query
-  search_query = spectre_state.query.search_query
-  require('spectre').open({
-    search_text = search_query,
-    replace_text = replace_query,
-    path = path,
-  })
-end
-
-vim.keymap.set("n", "<space>D", search_resume,
-  { noremap = true, desc = 'reuse last spectre search' })
-vim.keymap.set("n", "<space>s", require('spectre').open, { noremap = true, desc = 'spectre search' })
-vim.keymap.set("n", "<space>sw", function() require('spectre').open_visual({ select_word = true }) end,
-  { noremap = true, desc = 'spectre search current word' })
-vim.keymap.set("v", "<space>s", "<cmd>lua require('spectre').open_visual()<cr>", { noremap = true })
-vim.keymap.set("n", "<space>sc", "viw:lua require('spectre').open_file_search()<cr>", { noremap = true })
+-- spectre_state = require('spectre.actions').get_state()
+-- is_file = spectre_state.query.is_file
+-- path = spectre_state.query.path
+-- replace_query = spectre_state.query.replace_query
+-- search_quey = spectre_state.query.search_quey
+--
+-- search_resume = function()
+--   spectre_state = require('spectre.actions').get_state()
+--   is_file = spectre_state.query.is_file
+--   path = spectre_state.query.path
+--   replace_query = spectre_state.query.replace_query
+--   search_query = spectre_state.query.search_query
+--   require('spectre').open({
+--     search_text = search_query,
+--     replace_text = replace_query,
+--     path = path,
+--   })
+-- end
+--
+-- vim.keymap.set("n", "<space>D", search_resume,
+--   { noremap = true, desc = 'reuse last spectre search' })
+-- vim.keymap.set("n", "<space>s", require('spectre').open, { noremap = true, desc = 'spectre search' })
+-- vim.keymap.set("n", "<space>sw", function() require('spectre').open_visual({ select_word = true }) end,
+--   { noremap = true, desc = 'spectre search current word' })
+-- vim.keymap.set("v", "<space>s", "<cmd>lua require('spectre').open_visual()<cr>", { noremap = true })
+-- vim.keymap.set("n", "<space>sc", "viw:lua require('spectre').open_file_search()<cr>", { noremap = true })
 vim.keymap.set("n", "<space>gg", function() require('neogit').open() end, { noremap = true, desc = "neogit" })
 vim.keymap.set("n", "<space>gb", "<cmd>GitBlameToggle<cr>", { noremap = true })
 vim.keymap.set("n", "<space>go", "<cmd>GitBlameOpenCommitURL<cr>", { noremap = true })
