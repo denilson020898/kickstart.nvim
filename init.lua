@@ -225,7 +225,7 @@ require('lazy').setup({
   --   name = "catppuccin",
   --   priority = 1000,
   --   config = function()
-  --     vim.cmd.colorscheme 'catppuccin'
+  --     vim.cmd.colorscheme 'catppuccin-frappe'
   --   end,
   -- },
 
@@ -354,6 +354,12 @@ vim.o.termguicolors = true
 -- CUSTOM DENILSON SETTINGS
 -- vim.wo.relativenumber = true
 vim.o.iskeyword = vim.o.iskeyword .. ",-" .. ",_"
+vim.o.expandtab = true
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
+vim.o.tabstop = 4
+vim.o.smartindent = true
+
 vim.cmd("autocmd Filetype cpp setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2")
 vim.cmd("autocmd Filetype c setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2")
 vim.cmd("autocmd Filetype wast setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2")
@@ -501,32 +507,32 @@ vim.keymap.set('n', '<space>Q', require('telescope.builtin').quickfixhistory, { 
 vim.keymap.set('n', '<space>k', "<cmd>RustHoverActions<cr>", {noremap = true})
 vim.keymap.set("n", "<space>c", function() require("treesitter-context").go_to_context() end, { silent = true, desc = 'parent treesitter context' })
 
--- spectre_state = require('spectre.actions').get_state()
--- is_file = spectre_state.query.is_file
--- path = spectre_state.query.path
--- replace_query = spectre_state.query.replace_query
--- search_quey = spectre_state.query.search_quey
---
--- search_resume = function()
---   spectre_state = require('spectre.actions').get_state()
---   is_file = spectre_state.query.is_file
---   path = spectre_state.query.path
---   replace_query = spectre_state.query.replace_query
---   search_query = spectre_state.query.search_query
---   require('spectre').open({
---     search_text = search_query,
---     replace_text = replace_query,
---     path = path,
---   })
--- end
---
--- vim.keymap.set("n", "<space>D", search_resume,
---   { noremap = true, desc = 'reuse last spectre search' })
--- vim.keymap.set("n", "<space>s", require('spectre').open, { noremap = true, desc = 'spectre search' })
--- vim.keymap.set("n", "<space>sw", function() require('spectre').open_visual({ select_word = true }) end,
---   { noremap = true, desc = 'spectre search current word' })
--- vim.keymap.set("v", "<space>s", "<cmd>lua require('spectre').open_visual()<cr>", { noremap = true })
--- vim.keymap.set("n", "<space>sc", "viw:lua require('spectre').open_file_search()<cr>", { noremap = true })
+spectre_state = require('spectre.actions').get_state()
+is_file = spectre_state.query.is_file
+path = spectre_state.query.path
+replace_query = spectre_state.query.replace_query
+search_quey = spectre_state.query.search_quey
+
+search_resume = function()
+  spectre_state = require('spectre.actions').get_state()
+  is_file = spectre_state.query.is_file
+  path = spectre_state.query.path
+  replace_query = spectre_state.query.replace_query
+  search_query = spectre_state.query.search_query
+  require('spectre').open({
+    search_text = search_query,
+    replace_text = replace_query,
+    path = path,
+  })
+end
+
+vim.keymap.set("n", "<space>D", search_resume,
+  { noremap = true, desc = 'reuse last spectre search' })
+vim.keymap.set("n", "<space>s", require('spectre').open, { noremap = true, desc = 'spectre search' })
+vim.keymap.set("n", "<space>sw", function() require('spectre').open_visual({ select_word = true }) end,
+  { noremap = true, desc = 'spectre search current word' })
+vim.keymap.set("v", "<space>s", "<cmd>lua require('spectre').open_visual()<cr>", { noremap = true })
+vim.keymap.set("n", "<space>sc", "viw:lua require('spectre').open_file_search()<cr>", { noremap = true })
 vim.keymap.set("n", "<space>gg", function() require('neogit').open() end, { noremap = true, desc = "neogit" })
 vim.keymap.set("n", "<space>gb", "<cmd>GitBlameToggle<cr>", { noremap = true })
 vim.keymap.set("n", "<space>go", "<cmd>GitBlameOpenCommitURL<cr>", { noremap = true })
@@ -550,6 +556,11 @@ vim.keymap.set("n", "<A-h>", "5<C-w><", { noremap = true })
 vim.keymap.set("n", "<A-j>", "5<C-w>-", { noremap = true })
 vim.keymap.set("n", "<A-k>", "5<C-w>+", { noremap = true })
 vim.keymap.set("n", "<A-l>", "5<C-w>>", { noremap = true })
+
+vim.keymap.set("n", "<space>h", "<cmd>cnext<cr>", { noremap = true, desc = 'forward quickfixlist' })
+vim.keymap.set("n", "<space>;", "<cmd>cprev<cr>", { noremap = true, desc = 'backward quickfixlist' })
+-- vim.keymap.set("n", "<space>j", "<cmd>lnext<cr>", { noremap = true, desc = 'forward loclist' })
+-- vim.keymap.set("n", "<space>k", "<cmd>lprev<cr>", { noremap = true, desc = 'backward loclist' })
 
 -- vim.api.nvim_create_autocmd("CmdLineLeave", {
 --   callback = function()
@@ -805,8 +816,8 @@ cmp.setup {
   mapping = cmp.mapping.preset.insert {
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-k>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-j>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete {},
     ['<CR>'] = cmp.mapping.confirm {
       select = true,
