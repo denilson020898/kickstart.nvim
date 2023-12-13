@@ -19,7 +19,7 @@ return {
     'jay-babu/mason-nvim-dap.nvim',
 
     -- Add your own debuggers here
-    'leoluz/nvim-dap-go',
+    -- 'leoluz/nvim-dap-go',
     'mfussenegger/nvim-dap-python',
   },
   config = function()
@@ -43,7 +43,8 @@ return {
       },
     }
 
-  require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+    require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+    -- require('dap-python').setup('python')
 
     -- Basic debugging keymaps, feel free to change to your liking!
     vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
@@ -85,6 +86,6 @@ return {
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
     -- Install golang specific config
-    require('dap-go').setup()
+    -- require('dap-go').setup()
   end,
 }
