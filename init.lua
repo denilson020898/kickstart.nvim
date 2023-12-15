@@ -516,17 +516,21 @@ vim.keymap.set("n", "<space>c", function() require("treesitter-context").go_to_c
 
 vim.keymap.set("n", "<space>x", function() require("neotest").run.run() end, { silent = true, desc = 'neotest run nearest' })
 vim.keymap.set("n", "<space>X", function() require("neotest").run.stop() end, { silent = true, desc = 'neotest run nearest' })
+
 vim.keymap.set("n", "<leader>x", function() require("neotest").output.open({ enter = true }) end, { silent = true, desc = 'neotest run nearest' })
 
 vim.keymap.set("n", "<space>z", function() require("neotest").run.run(vim.fn.expand("%")) end, { silent = true, desc = 'neotest run nearest' })
 vim.keymap.set("n", "<space>Z", function() require("neotest").summary.toggle() end, { silent = true, desc = 'neotest run nearest' })
 vim.keymap.set("n", "<leader>X", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, { silent = true, desc = 'neotest run nearest' })
 
-vim.keymap.set("n", "<leader>Z", function() 
-  require("neotest").output_panel.clear()
-  require("neotest").run.run()
-  require("neotest").output_panel.open()
-end, { silent = true, desc = 'neotest run nearest' })
+vim.keymap.set("n", "<leader>v", function() require("neotest").run.run({strategy = "dap"}) end, { silent = true, desc = 'neotest run nearest' })
+
+
+-- vim.keymap.set("n", "<leader>Z", function() 
+--   require("neotest").output_panel.clear()
+--   require("neotest").run.run()
+--   require("neotest").output_panel.open()
+-- end, { silent = true, desc = 'neotest run nearest' })
 
 
 spectre_state = require('spectre.actions').get_state()
