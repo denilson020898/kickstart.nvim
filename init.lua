@@ -511,18 +511,27 @@ vim.keymap.set({ "n", "v" }, "<leader>m", "<cmd>HopWord<cr>", { noremap = true }
 vim.keymap.set('n', '<space>q', require('telescope.builtin').quickfix, { desc = 'telescope quickfix' })
 vim.keymap.set('n', '<space>Q', require('telescope.builtin').quickfixhistory, { desc = 'telescope quickfix history' })
 
-vim.keymap.set('n', '<leader>k', "<cmd>RustHoverActions<cr>", {noremap = true})
-vim.keymap.set("n", "<space>c", function() require("treesitter-context").go_to_context() end, { silent = true, desc = 'parent treesitter context' })
+vim.keymap.set('n', '<leader>k', "<cmd>RustHoverActions<cr>", { noremap = true })
+vim.keymap.set("n", "<space>c", function() require("treesitter-context").go_to_context() end,
+  { silent = true, desc = 'parent treesitter context' })
 
-vim.keymap.set("n", "<leader>,", function() require("neotest").run.run() end, { silent = true, desc = 'neotest start run nearest' })
-vim.keymap.set("n", "<leader>l", function() require("neotest").run.run_last() end, { silent = true, desc = 'neotest start run last' })
-vim.keymap.set("n", "<leader>j", function() require("neotest").run.run(vim.fn.expand("%")) end, { silent = true, desc = 'neotest run this file' })
-vim.keymap.set("n", "<leader>.", function() require("neotest").output.open({ enter = true }) end, { silent = true, desc = 'neotest open output' })
-vim.keymap.set("n", "<leader><", function() require("neotest").run.stop() end, { silent = true, desc = 'neotest stop run nearest' })
-vim.keymap.set("n", "<leader>J", function() require("neotest").summary.toggle() end, { silent = true, desc = 'neotest toggle summary' })
-vim.keymap.set("n", "<leader>h", function() require("neotest").run.run({strategy = "dap"}) end, { silent = true, desc = 'neotest debug run nearest' })
-vim.keymap.set("n", "<leader>H", function() require("neotest").run.run_last({strategy = "dap"}) end, { silent = true, desc = 'neotest debug run last' })
-vim.keymap.set("n", "<leader>L", function() 
+vim.keymap.set("n", "<leader>,", function() require("neotest").run.run() end,
+  { silent = true, desc = 'neotest start run nearest' })
+vim.keymap.set("n", "<leader>l", function() require("neotest").run.run_last() end,
+  { silent = true, desc = 'neotest start run last' })
+vim.keymap.set("n", "<leader>j", function() require("neotest").run.run(vim.fn.expand("%")) end,
+  { silent = true, desc = 'neotest run this file' })
+vim.keymap.set("n", "<leader>.", function() require("neotest").output.open({ enter = true }) end,
+  { silent = true, desc = 'neotest open output' })
+vim.keymap.set("n", "<leader><", function() require("neotest").run.stop() end,
+  { silent = true, desc = 'neotest stop run nearest' })
+vim.keymap.set("n", "<leader>J", function() require("neotest").summary.toggle() end,
+  { silent = true, desc = 'neotest toggle summary' })
+vim.keymap.set("n", "<leader>h", function() require("neotest").run.run({ strategy = "dap" }) end,
+  { silent = true, desc = 'neotest debug run nearest' })
+vim.keymap.set("n", "<leader>H", function() require("neotest").run.run_last({ strategy = "dap" }) end,
+  { silent = true, desc = 'neotest debug run last' })
+vim.keymap.set("n", "<leader>L", function()
   require("neotest").output_panel.clear()
   require("neotest").output_panel.open()
 end, { silent = true, desc = 'neotest show output panel' })
@@ -891,3 +900,26 @@ cmp.setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+if vim.g.neovide then
+  vim.o.guifont = "LiterationMono Nerd Font:h12" -- text below applies for VimScript
+  local map = vim.keymap.set
+
+  local function neovideScale(amount)
+    local temp = vim.g.neovide_scale_factor + amount
+
+    if temp < 0.5 then
+      return
+    end
+
+    vim.g.neovide_scale_factor = temp
+  end
+
+  map("n", "<C-=>", function()
+    neovideScale(0.1)
+  end)
+
+  map("n", "<C-->", function()
+    neovideScale(-0.1)
+  end)
+end
