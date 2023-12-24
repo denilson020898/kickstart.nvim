@@ -79,21 +79,26 @@ return {
       },
       layouts = {
         {
-          elements = { {
-            id = "scopes",
-            size = 0.35
-          }, {
-            id = "breakpoints",
-            size = 0.25
-          }, {
-            id = "stacks",
-            size = 0.25
-          }, {
-            id = "watches",
-            size = 0.15
-          } },
+          elements = {
+            {
+              id = "breakpoints",
+              size = 0.25
+            },
+            {
+              id = "watches",
+              size = 0.15
+            },
+            {
+              id = "stacks",
+              size = 0.25
+            },
+            {
+              id = "scopes",
+              size = 0.35
+            },
+          },
           position = "left",
-          size = 100
+          size = 70
         },
         {
           elements = { {
@@ -104,7 +109,7 @@ return {
             size = 0.35
           } },
           position = "bottom",
-          size = 30
+          size = 28
         }
       },
     }

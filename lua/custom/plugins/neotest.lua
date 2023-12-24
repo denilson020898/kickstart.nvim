@@ -31,7 +31,7 @@ return {
           dap_adapter = "rt_lldb",
         },
 
-        require("neotest-zig"), -- Registration
+        -- require("neotest-zig"), -- Registration
 
       }
     })
