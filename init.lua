@@ -519,6 +519,7 @@ vim.keymap.set('n', '<space>q', require('telescope.builtin').quickfix, { desc = 
 vim.keymap.set('n', '<space>Q', require('telescope.builtin').quickfixhistory, { desc = 'telescope quickfix history' })
 
 vim.keymap.set('n', '<leader>k', "<cmd>RustHoverActions<cr>", { noremap = true })
+vim.keymap.set('n', '<space>e', "<cmd>RustRunnables<cr>", { noremap = true })
 vim.keymap.set("n", "<space>c", function() require("treesitter-context").go_to_context() end,
   { silent = true, desc = 'parent treesitter context' })
 
