@@ -501,10 +501,38 @@ vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by 
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
-vim.keymap.set('n', '<space>j', require("harpoon.ui").toggle_quick_menu, { desc = '[j] harpoon toggle quick menu' })
-vim.keymap.set('n', '<space>k', require("harpoon.mark").add_file, { desc = '[k] harpoon add current file' })
-vim.keymap.set('n', '<space>i', require("harpoon.ui").nav_next, { desc = '[k] harpoon nav next' })
-vim.keymap.set('n', '<space>u', require("harpoon.ui").nav_prev, { desc = '[k] harpoon nav prev' })
+
+local harpoon = require("harpoon")
+
+-- REQUIRED
+harpoon:setup()
+-- REQUIRED
+
+vim.keymap.set("n", "<space>k", function() harpoon:list():append() end)
+-- vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+vim.keymap.set("n", "<space>j", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+-- vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
+-- vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
+-- vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
+-- vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
+
+vim.keymap.set("n", "<space>1", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "<space>2", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "<space>3", function() harpoon:list():select(3) end)
+vim.keymap.set("n", "<space>4", function() harpoon:list():select(4) end)
+
+-- Toggle previous & next buffers stored within Harpoon list
+-- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+-- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
+
+vim.keymap.set("n", "<space>i", function() harpoon:list():next() end)
+vim.keymap.set("n", "<space>u", function() harpoon:list():prev() end)
+
+-- vim.keymap.set('n', '<space>j', require("harpoon.ui").toggle_quick_menu, { desc = '[j] harpoon toggle quick menu' })
+-- vim.keymap.set('n', '<space>k', require("harpoon.mark").add_file, { desc = '[k] harpoon add current file' })
+-- vim.keymap.set('n', '<space>i', require("harpoon.ui").nav_next, { desc = '[k] harpoon nav next' })
+-- vim.keymap.set('n', '<space>u', require("harpoon.ui").nav_prev, { desc = '[k] harpoon nav prev' })
 
 -- CUSTOM DENILSON KEYBINDINGS
 vim.keymap.set("i", "jj", "<esc>", { noremap = true })
