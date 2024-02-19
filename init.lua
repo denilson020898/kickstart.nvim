@@ -352,7 +352,7 @@ vim.wo.signcolumn = 'yes'
 
 -- Decrease update time
 vim.o.updatetime = 100
-vim.o.timeoutlen = 200
+vim.o.timeoutlen = 500
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -505,7 +505,13 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 local harpoon = require("harpoon")
 
 -- REQUIRED
-harpoon:setup()
+harpoon:setup({
+    settings = {
+      save_on_toggle = true,
+      -- sync_on_ui_close = true,
+    }
+  }
+)
 -- REQUIRED
 
 vim.keymap.set("n", "<space>k", function() harpoon:list():append() end)
@@ -521,6 +527,8 @@ vim.keymap.set("n", "<space>1", function() harpoon:list():select(1) end)
 vim.keymap.set("n", "<space>2", function() harpoon:list():select(2) end)
 vim.keymap.set("n", "<space>3", function() harpoon:list():select(3) end)
 vim.keymap.set("n", "<space>4", function() harpoon:list():select(4) end)
+vim.keymap.set("n", "<space>5", function() harpoon:list():select(5) end)
+vim.keymap.set("n", "<space>6", function() harpoon:list():select(6) end)
 
 -- Toggle previous & next buffers stored within Harpoon list
 -- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
@@ -714,7 +722,7 @@ end, 0)
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
@@ -757,6 +765,12 @@ local on_attach = function(_, bufnr)
   nmap('<leader>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, '[W]orkspace [L]ist Folders')
+
+  if client.server_capabilities.inlayHintProvider then
+    vim.api.nvim_set_hl(0, "LspInlayHint", { fg = "#938aad" })
+    -- nmap('<leader>ih', function() vim.lsp.inlay_hint.enable(bufnr, true) end, "Toggle [I]nlay [H]int")
+    nmap('<leader>ih', function() vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled()) end, "Toggle [I]nlay [H]int")
+  end
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
