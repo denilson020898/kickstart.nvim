@@ -530,7 +530,7 @@ vim.keymap.set('n', '<space>r', require('telescope.builtin').resume, { desc = 'r
 vim.keymap.set("n", "<space><space>", "<cmd>b#<cr>", { noremap = true, desc = 'previous buffer' })
 vim.keymap.set("v", ">", ">gv", { noremap = true })
 vim.keymap.set("v", "<", "<gv", { noremap = true })
-vim.keymap.set({ "n", "v" }, "<leader>.", "<cmd>HopAnywhere<cr>", { noremap = true })
+vim.keymap.set({ "n", "v" }, "<leader>M", "<cmd>HopAnywhere<cr>", { noremap = true })
 vim.keymap.set({ "n", "v" }, "<leader>m", "<cmd>HopWord<cr>", { noremap = true })
 
 vim.keymap.set('n', '<space>q', require('telescope.builtin').quickfix, { desc = 'telescope quickfix' })
@@ -539,30 +539,24 @@ vim.keymap.set('n', '<space>Q', require('telescope.builtin').quickfixhistory, { 
 vim.keymap.set('n', '<leader>k', "<cmd>RustHoverActions<cr>", {noremap = true})
 vim.keymap.set("n", "<space>c", function() require("treesitter-context").go_to_context() end, { silent = true, desc = 'parent treesitter context' })
 
-vim.keymap.set("n", "<space>x", function() require("neotest").run.run() end, { silent = true, desc = 'neotest run nearest' })
-vim.keymap.set("n", "<space>X", function() require("neotest").run.stop() end, { silent = true, desc = 'neotest run nearest' })
-
-vim.keymap.set("n", "<leader>x", function() require("neotest").output.open({ enter = true }) end, { silent = true, desc = 'neotest run nearest' })
-
-vim.keymap.set("n", "<space>z", function() require("neotest").run.run(vim.fn.expand("%")) end, { silent = true, desc = 'neotest run nearest' })
-vim.keymap.set("n", "<space>Z", function() require("neotest").summary.toggle() end, { silent = true, desc = 'neotest run nearest' })
-vim.keymap.set("n", "<leader>X", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, { silent = true, desc = 'neotest run nearest' })
-
-vim.keymap.set("n", "<leader>v", function() require("neotest").run.run({strategy = "dap"}) end, { silent = true, desc = 'neotest run nearest' })
-
-
--- vim.keymap.set("n", "<leader>Z", function() 
---   require("neotest").output_panel.clear()
---   require("neotest").run.run()
---   require("neotest").output_panel.open()
--- end, { silent = true, desc = 'neotest run nearest' })
-
+vim.keymap.set("n", "<leader>,", function() require("neotest").run.run() end, { silent = true, desc = 'neotest start run nearest' })
+vim.keymap.set("n", "<leader>j", function() require("neotest").run.run(vim.fn.expand("%")) end, { silent = true, desc = 'neotest run nearest' })
+vim.keymap.set("n", "<leader>.", function() require("neotest").output.open({ enter = true }) end, { silent = true, desc = 'neotest run nearest' })
+vim.keymap.set("n", "<leader><", function() require("neotest").run.stop() end, { silent = true, desc = 'neotest stop run nearest' })
+vim.keymap.set("n", "<leader>J", function() require("neotest").summary.toggle() end, { silent = true, desc = 'neotest run nearest' })
+vim.keymap.set("n", "<leader>L", function() require("neotest").run.run({strategy = "dap"}) end, { silent = true, desc = 'neotest run nearest' })
+vim.keymap.set("n", "<leader>l", function() 
+  require("neotest").output_panel.clear()
+  require("neotest").output_panel.open()
+end, { silent = true, desc = 'neotest run nearest' })
+--
+-- vim.keymap.set("n", "<leader>X", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, { silent = true, desc = 'neotest run nearest' })
 
 spectre_state = require('spectre.actions').get_state()
 is_file = spectre_state.query.is_file
 path = spectre_state.query.path
 replace_query = spectre_state.query.replace_query
-search_quey = spectre_state.query.search_quey
+search_query = spectre_state.query.search_quey
 
 search_resume = function()
   spectre_state = require('spectre.actions').get_state()
@@ -834,7 +828,9 @@ local servers = {
       }
 
 -- Setup neovim lua configuration
-require('neodev').setup()
+require("neodev").setup({
+  library = { plugins = { "neotest" }, types = true },
+})
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
