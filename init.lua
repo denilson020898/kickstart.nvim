@@ -517,6 +517,11 @@ vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by 
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
+vim.keymap.set('n', '<space>j', require("harpoon.ui").toggle_quick_menu, { desc = '[j] harpoon toggle quick menu' })
+vim.keymap.set('n', '<space>k', require("harpoon.mark").add_file, { desc = '[k] harpoon add current file' })
+vim.keymap.set('n', '<space>i', require("harpoon.ui").nav_next, { desc = '[k] harpoon nav next' })
+vim.keymap.set('n', '<space>u', require("harpoon.ui").nav_prev, { desc = '[k] harpoon nav prev' })
+
 -- CUSTOM DENILSON KEYBINDINGS
 vim.keymap.set("n", "<space>tt", "<cmd>Telescope<cr>", { noremap = true, desc = 'telescope main' })
 vim.keymap.set('n', '<space>d', require('telescope.builtin').live_grep, { desc = 'search by grep' })
@@ -531,7 +536,7 @@ vim.keymap.set({ "n", "v" }, "<leader>m", "<cmd>HopWord<cr>", { noremap = true }
 vim.keymap.set('n', '<space>q', require('telescope.builtin').quickfix, { desc = 'telescope quickfix' })
 vim.keymap.set('n', '<space>Q', require('telescope.builtin').quickfixhistory, { desc = 'telescope quickfix history' })
 
-vim.keymap.set('n', '<space>k', "<cmd>RustHoverActions<cr>", {noremap = true})
+vim.keymap.set('n', '<leader>k', "<cmd>RustHoverActions<cr>", {noremap = true})
 vim.keymap.set("n", "<space>c", function() require("treesitter-context").go_to_context() end, { silent = true, desc = 'parent treesitter context' })
 
 spectre_state = require('spectre.actions').get_state()
