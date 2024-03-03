@@ -543,8 +543,6 @@ vim.keymap.set({ "n", "v" }, "<leader>m", "<cmd>HopWord<cr>", { noremap = true }
 vim.keymap.set('n', '<space>q', require('telescope.builtin').quickfix, { desc = 'telescope quickfix' })
 vim.keymap.set('n', '<space>Q', require('telescope.builtin').quickfixhistory, { desc = 'telescope quickfix history' })
 
-vim.keymap.set('n', '<leader>k', "<cmd>RustHoverActions<cr>", { noremap = true })
-vim.keymap.set('n', '<space>e', "<cmd>RustRunnables<cr>", { noremap = true })
 vim.keymap.set("n", "<space>c", function() require("treesitter-context").go_to_context() end,
   { silent = true, desc = 'parent treesitter context' })
 
@@ -609,12 +607,13 @@ vim.keymap.set("n", "}", "}zz", { noremap = true })
 vim.keymap.set("n", "N", "Nzz", { noremap = true })
 vim.keymap.set("n", "n", "nzz", { noremap = true })
 vim.keymap.set("n", "G", "Gzz", { noremap = true })
--- vim.keymap.set("n", "gg", "ggzz", { noremap = true })
--- vim.keymap.set("n", "<C-i>", "<C-i>zz", { noremap = true })
--- vim.keymap.set("n", "<C-o>", "<C-o>zz", { noremap = true })
--- vim.keymap.set("n", "%", "%zz", { noremap = true })
--- vim.keymap.set("n", "*", "*zz", { noremap = true })
--- vim.keymap.set("n", "#", "#zz", { noremap = true })
+
+vim.keymap.set("n", "gg", "ggzz", { noremap = true })
+vim.keymap.set("n", "<C-i>", "<C-i>zz", { noremap = true })
+vim.keymap.set("n", "<C-o>", "<C-o>zz", { noremap = true })
+vim.keymap.set("n", "%", "%zz", { noremap = true })
+vim.keymap.set("n", "*", "*zz", { noremap = true })
+vim.keymap.set("n", "#", "#zz", { noremap = true })
 
 vim.keymap.set("n", "<A-h>", "5<C-w><", { noremap = true })
 vim.keymap.set("n", "<A-j>", "5<C-w>-", { noremap = true })
@@ -623,27 +622,14 @@ vim.keymap.set("n", "<A-l>", "5<C-w>>", { noremap = true })
 
 vim.keymap.set("n", "<space>h", "<cmd>cnext<cr>", { noremap = true, desc = 'forward quickfixlist' })
 vim.keymap.set("n", "<space>;", "<cmd>cprev<cr>", { noremap = true, desc = 'backward quickfixlist' })
--- vim.keymap.set("n", "<space>j", "<cmd>lnext<cr>", { noremap = true, desc = 'forward loclist' })
--- vim.keymap.set("n", "<space>k", "<cmd>lprev<cr>", { noremap = true, desc = 'backward loclist' })
 
 vim.keymap.set("n", "<leader>zz", "<Plug>RestNvimLast", { noremap = true, desc = 'backward quickfixlist' })
 vim.keymap.set("n", "<leader>zx", "<Plug>RestNvim", { noremap = true, desc = 'backward quickfixlist' })
 vim.keymap.set("n", "<leader>zX", "<Plug>RestNvimPreview", { noremap = true, desc = 'backward quickfixlist' })
 
+-- vim.keymap.set('n', '<space>ca', function() vim.cmd.RustLsp { 'hover', 'actions' } end, { desc = 'Rust Hover Action' })
+-- vim.keymap.set('n', '<space>e', function() vim.cmd.RustLsp('explainError') end, { desc = 'Rust explain errors' })
 
--- vim.api.nvim_create_autocmd("CmdLineLeave", {
---   callback = function()
---     vim.api.nvim_feedkeys("zz", "n", false)
---   end
--- })
-
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    if vim.fn.argv(0) == "" then
-      require("telescope.builtin").find_files()
-    end
-  end,
-})
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -803,23 +789,7 @@ local servers = {
   -- clangd = {},
   -- gopls = {},
   -- pyright = {},
-  rust_analyzer = {
-    settings = {
-      ["rust-analyzer"] = {
-        diagnostics = {
-          enable = true,
-          disabled = { "unresolved-proc-macro" },
-          enableExperimental = true,
-        },
-        -- procMacro = { enable = true },
-        cargo = { allFeatures = true },
-        checkOnSave = {
-          -- command = "clippy",
-          extraArgs = { "--no-deps" },
-        },
-      },
-    },
-  },
+  -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
@@ -882,6 +852,11 @@ end
 
 mason_lspconfig.setup_handlers {
   function(server_name)
+
+    -- if server_name == "rust_analyzer" then
+    --   return
+    -- end
+
     require('lspconfig')[server_name].setup {
       capabilities = capabilities,
       on_attach = on_attach,
@@ -889,18 +864,6 @@ mason_lspconfig.setup_handlers {
       filetypes = (servers[server_name] or {}).filetypes,
     }
   end,
-  -- if rust-tools is prefered, uncomment this
-  ["rust_analyzer"] = function()
-    require("rust-tools").setup {
-      server = {
-        on_attach = on_attach,
-        capabilities = capabilities,
-      },
-      settings = servers["rust_analyzer"],
-      filetypes = "rust",
-      dap = { adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path) }
-    }
-  end
 }
 
 -- [[ Configure nvim-cmp ]]
