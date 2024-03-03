@@ -10,11 +10,13 @@ return {
     "nvim-neotest/neotest-vim-test",
 
     "rouge8/neotest-rust",
+
+    "lawrence-laz/neotest-zig",
   },
   config = function()
     require("neotest").setup({
       adapters = {
-        -- python 
+        -- python
         require("neotest-python")({
           dap = { justMyCode = false },
         }),
@@ -23,11 +25,14 @@ return {
           ignore_file_types = { "python", "vim", "lua" },
         }),
 
-        -- rust 
+        -- rust
         require("neotest-rust") {
           args = { "--no-capture" },
           dap_adapter = "rt_lldb",
-        }
+        },
+
+        require("neotest-zig"), -- Registration
+
       }
     })
   end,
