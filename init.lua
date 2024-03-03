@@ -495,14 +495,37 @@ vim.keymap.set("v", ">", ">gv", { noremap = true })
 vim.keymap.set("v", "<", "<gv", { noremap = true })
 vim.keymap.set({ "n", "v" }, "<leader>.", "<cmd>HopAnywhere<cr>", { noremap = true })
 vim.keymap.set({ "n", "v" }, "<leader>m", "<cmd>HopWord<cr>", { noremap = true })
-vim.keymap.set("n", "<space>D", require('custom/plugins/spectre').search_resume, { noremap = true, desc = 'reuse last spectre search' })
+vim.keymap.set("n", "<space>D", require('custom/plugins/spectre').search_resume,
+  { noremap = true, desc = 'reuse last spectre search' })
 vim.keymap.set("n", "<space>s", require('spectre').open, { noremap = true, desc = 'spectre search' })
-vim.keymap.set("n", "<space>sw", function() require('spectre').open_visual({ select_word = true }) end, { noremap = true, desc = 'specte search current word' })
+vim.keymap.set("n", "<space>sw", function() require('spectre').open_visual({ select_word = true }) end,
+  { noremap = true, desc = 'specte search current word' })
 vim.keymap.set("v", "<space>s", "<cmd>lua require('spectre').open_visual()<cr>", { noremap = true })
 vim.keymap.set("n", "<space>sc", "viw:lua require('spectre').open_file_search()<cr>", { noremap = true })
 vim.keymap.set("n", "<space>gg", function() require('neogit').open() end, { noremap = true, desc = "neogit" })
-vim.keymap.set("n", "<space>gb", "<cmd>GitBlameToggle<cr>", { noremap = true})
-vim.keymap.set("n", "<space>go", "<cmd>GitBlameOpenCommitURL<cr>", { noremap = true})
+vim.keymap.set("n", "<space>gb", "<cmd>GitBlameToggle<cr>", { noremap = true })
+vim.keymap.set("n", "<space>go", "<cmd>GitBlameOpenCommitURL<cr>", { noremap = true })
+
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true })
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true })
+vim.keymap.set("n", "{", "{zz", { noremap = true })
+vim.keymap.set("n", "}", "}zz", { noremap = true })
+vim.keymap.set("n", "N", "Nzz", { noremap = true })
+vim.keymap.set("n", "n", "nzz", { noremap = true })
+vim.keymap.set("n", "G", "Gzz", { noremap = true })
+vim.keymap.set("n", "gg", "ggzz", { noremap = true })
+vim.keymap.set("n", "<C-i>", "<C-i>zz", { noremap = true })
+vim.keymap.set("n", "<C-o>", "<C-o>zz", { noremap = true })
+vim.keymap.set("n", "%", "%zz", { noremap = true })
+vim.keymap.set("n", "*", "*zz", { noremap = true })
+vim.keymap.set("n", "#", "#zz", { noremap = true })
+
+vim.api.nvim_create_autocmd("CmdLineLeave", {
+  callback = function ()
+    vim.api.nvim_feedkeys("zz", "n", false)
+  end
+})
+
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
