@@ -4,14 +4,26 @@ return {
     "nvim-treesitter/nvim-treesitter",
     "nvim-lua/plenary.nvim",
     "antoinemadec/FixCursorHold.nvim",
-    -- "nvim-neotest/neotest-python",
-    -- "nvim-neotest/neotest-plenary",
-    -- "nvim-neotest/neotest-vim-test",
+
+    "nvim-neotest/neotest-python",
+    "nvim-neotest/neotest-plenary",
+    "nvim-neotest/neotest-vim-test",
+
     "rouge8/neotest-rust",
   },
   config = function()
     require("neotest").setup({
       adapters = {
+        -- python 
+        require("neotest-python")({
+          dap = { justMyCode = false },
+        }),
+        require("neotest-plenary"),
+        require("neotest-vim-test")({
+          ignore_file_types = { "python", "vim", "lua" },
+        }),
+
+        -- rust 
         require("neotest-rust") {
           args = { "--no-capture" },
           dap_adapter = "rt_lldb",
