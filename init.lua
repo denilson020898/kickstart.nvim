@@ -621,6 +621,11 @@ vim.keymap.set("n", "<space>;", "<cmd>cprev<cr>", { noremap = true, desc = 'back
 -- vim.keymap.set("n", "<space>j", "<cmd>lnext<cr>", { noremap = true, desc = 'forward loclist' })
 -- vim.keymap.set("n", "<space>k", "<cmd>lprev<cr>", { noremap = true, desc = 'backward loclist' })
 
+vim.keymap.set("n", "<leader>zz", "<Plug>RestNvimLast", { noremap = true, desc = 'backward quickfixlist' })
+vim.keymap.set("n", "<leader>zx", "<Plug>RestNvim", { noremap = true, desc = 'backward quickfixlist' })
+vim.keymap.set("n", "<leader>zX", "<Plug>RestNvimPreview", { noremap = true, desc = 'backward quickfixlist' })
+
+
 -- vim.api.nvim_create_autocmd("CmdLineLeave", {
 --   callback = function()
 --     vim.api.nvim_feedkeys("zz", "n", false)
