@@ -560,8 +560,8 @@ vim.keymap.set("n", "<leader>L", function()
   require("neotest").output_panel.clear()
   require("neotest").output_panel.open()
 end, { silent = true, desc = 'neotest show output panel' })
---
--- vim.keymap.set("n", "<leader>X", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, { silent = true, desc = 'neotest run nearest' })
+
+vim.keymap.set("n", "<leader>X", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, { silent = true, desc = 'neotest run nearest' })
 
 spectre_state = require('spectre.actions').get_state()
 is_file = spectre_state.query.is_file
