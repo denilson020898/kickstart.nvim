@@ -147,7 +147,7 @@ require('lazy').setup({
     "ray-x/lsp_signature.nvim",
     event = "VeryLazy",
     opts = {},
-    config = function(_, opts) require'lsp_signature'.setup(opts) end
+    config = function(_, opts) require 'lsp_signature'.setup(opts) end
   },
 
   {
@@ -168,6 +168,7 @@ require('lazy').setup({
       -- CUSTOM DENILSON CMP
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-calc",
+      "hrsh7th/cmp-path"
     },
   },
 
@@ -275,7 +276,7 @@ require('lazy').setup({
   --   end,
   -- },
 
-  { 
+  {
     "ellisonleao/gruvbox.nvim",
     priority = 1000,
     setup = true,
@@ -559,13 +560,12 @@ vim.keymap.set("n", "}", "}zz", { noremap = true })
 vim.keymap.set("n", "N", "Nzz", { noremap = true })
 vim.keymap.set("n", "n", "nzz", { noremap = true })
 vim.keymap.set("n", "G", "Gzz", { noremap = true })
-vim.keymap.set("n", "gg", "ggzz", { noremap = true })
-vim.keymap.set("n", "<C-i>", "<C-i>zz", { noremap = true })
-vim.keymap.set("n", "<C-o>", "<C-o>zz", { noremap = true })
-vim.keymap.set("n", "%", "%zz", { noremap = true })
-vim.keymap.set("n", "*", "*zz", { noremap = true })
-vim.keymap.set("n", "*", "*zz", { noremap = true })
-vim.keymap.set("n", "#", "#zz", { noremap = true })
+-- vim.keymap.set("n", "gg", "ggzz", { noremap = true })
+-- vim.keymap.set("n", "<C-i>", "<C-i>zz", { noremap = true })
+-- vim.keymap.set("n", "<C-o>", "<C-o>zz", { noremap = true })
+-- vim.keymap.set("n", "%", "%zz", { noremap = true })
+-- vim.keymap.set("n", "*", "*zz", { noremap = true })
+-- vim.keymap.set("n", "#", "#zz", { noremap = true })
 
 vim.keymap.set("n", "<A-h>", "5<C-w><", { noremap = true })
 vim.keymap.set("n", "<A-j>", "5<C-w>-", { noremap = true })
@@ -877,6 +877,7 @@ cmp.setup {
     { name = 'path' },
     { name = 'calc' },
     { name = 'buffer' },
+    { name = 'path' },
   },
 }
 
