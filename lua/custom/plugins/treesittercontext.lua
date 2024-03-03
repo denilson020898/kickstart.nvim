@@ -1,5 +1,6 @@
-M = {
+return {
   "nvim-treesitter/nvim-treesitter-context",
+  config = function()
   require 'treesitter-context'.setup {
     enable = true,          -- Enable this plugin (Can be enabled/disabled later via commands)
     max_lines = 0,          -- How many lines the window should span. Values <= 0 mean no limit.
@@ -14,6 +15,5 @@ M = {
     zindex = 20,   -- The Z-index of the context window
     on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
   }
+  end
 }
-vim.keymap.set("n", "<space>c", function() require("treesitter-context").go_to_context() end, { silent = true })
-return M
