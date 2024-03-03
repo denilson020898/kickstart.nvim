@@ -792,7 +792,7 @@ local on_attach = function(client, bufnr)
   end, '[W]orkspace [L]ist Folders')
 
   if client.server_capabilities.inlayHintProvider then
-    vim.api.nvim_set_hl(0, "LspInlayHint", { fg = "#938aad" })
+    -- vim.api.nvim_set_hl(0, "LspInlayHint", { fg = "#938aad" })
     -- nmap('<leader>ih', function() vim.lsp.inlay_hint.enable(bufnr, true) end, "Toggle [I]nlay [H]int")
     nmap('<leader>ih', function() vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled()) end, "Toggle [I]nlay [H]int")
   end
