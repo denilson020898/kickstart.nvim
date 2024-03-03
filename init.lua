@@ -539,6 +539,21 @@ vim.keymap.set('n', '<space>Q', require('telescope.builtin').quickfixhistory, { 
 vim.keymap.set('n', '<leader>k', "<cmd>RustHoverActions<cr>", {noremap = true})
 vim.keymap.set("n", "<space>c", function() require("treesitter-context").go_to_context() end, { silent = true, desc = 'parent treesitter context' })
 
+vim.keymap.set("n", "<space>x", function() require("neotest").run.run() end, { silent = true, desc = 'neotest run nearest' })
+vim.keymap.set("n", "<space>X", function() require("neotest").run.stop() end, { silent = true, desc = 'neotest run nearest' })
+vim.keymap.set("n", "<leader>x", function() require("neotest").output.open({ enter = true }) end, { silent = true, desc = 'neotest run nearest' })
+
+vim.keymap.set("n", "<space>z", function() require("neotest").run.run(vim.fn.expand("%")) end, { silent = true, desc = 'neotest run nearest' })
+vim.keymap.set("n", "<space>Z", function() require("neotest").summary.toggle() end, { silent = true, desc = 'neotest run nearest' })
+vim.keymap.set("n", "<leader>X", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, { silent = true, desc = 'neotest run nearest' })
+
+vim.keymap.set("n", "<leader>Z", function() 
+  require("neotest").output_panel.clear()
+  require("neotest").run.run()
+  require("neotest").output_panel.open()
+end, { silent = true, desc = 'neotest run nearest' })
+
+
 spectre_state = require('spectre.actions').get_state()
 is_file = spectre_state.query.is_file
 path = spectre_state.query.path
@@ -777,7 +792,7 @@ local servers = {
         -- procMacro = { enable = true },
         cargo = { allFeatures = true },
         checkOnSave = {
-          command = "clippy",
+          -- command = "clippy",
           extraArgs = { "--no-deps" },
         },
       },
@@ -828,6 +843,19 @@ mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
 
+local extension_path = vim.env.HOME .. '/.vscode/extensions/vadimcn.vscode-lldb-1.9.2/'
+local codelldb_path = extension_path .. 'adapter/codelldb'
+local liblldb_path = extension_path .. 'lldb/lib/liblldb'
+local this_os = vim.loop.os_uname().sysname;
+-- The path in windows is different
+if this_os:find "Windows" then
+  codelldb_path = extension_path .. "adapter\\codelldb.exe"
+  liblldb_path = extension_path .. "lldb\\bin\\liblldb.dll"
+else
+  -- The liblldb extension is .so for linux and .dylib for macOS
+  liblldb_path = liblldb_path .. (this_os == "Linux" and ".so" or ".dylib")
+end
+
 mason_lspconfig.setup_handlers {
   function(server_name)
     require('lspconfig')[server_name].setup {
@@ -845,7 +873,8 @@ mason_lspconfig.setup_handlers {
         capabilities = capabilities,
       },
       settings = servers["rust_analyzer"],
-      filetypes = "rust"
+      filetypes = "rust",
+      dap = { adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path) }
     }
   end
 }
