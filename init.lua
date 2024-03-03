@@ -267,23 +267,23 @@ require('lazy').setup({
   --   end,
   -- },
 
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'catppuccin'
-    end,
-  },
-
   -- {
-  --   "ellisonleao/gruvbox.nvim",
+  --   "catppuccin/nvim",
+  --   name = "catppuccin",
   --   priority = 1000,
-  --   setup = true,
   --   config = function()
-  --     vim.cmd([[colorscheme gruvbox]])
+  --     vim.cmd.colorscheme 'catppuccin'
   --   end,
   -- },
+
+  {
+    "ellisonleao/gruvbox.nvim",
+    priority = 1000,
+    setup = true,
+    config = function()
+      vim.cmd([[colorscheme gruvbox]])
+    end,
+  },
 
   {
     -- Set lualine as statusline
@@ -293,7 +293,7 @@ require('lazy').setup({
       options = {
         icons_enabled = false,
         -- theme = 'onedark',
-        theme = 'catppuccin',
+        -- theme = 'catppuccin',
         component_separators = '|',
         section_separators = '',
       },
@@ -523,6 +523,10 @@ vim.keymap.set('n', '<space>i', require("harpoon.ui").nav_next, { desc = '[k] ha
 vim.keymap.set('n', '<space>u', require("harpoon.ui").nav_prev, { desc = '[k] harpoon nav prev' })
 
 -- CUSTOM DENILSON KEYBINDINGS
+vim.keymap.set("i", "jj", "<esc>", { noremap = true })
+vim.keymap.set("i", "jk", "<esc>", { noremap = true })
+vim.keymap.set("i", "kj", "<esc>", { noremap = true })
+
 vim.keymap.set("n", "<space>tt", "<cmd>Telescope<cr>", { noremap = true, desc = 'telescope main' })
 vim.keymap.set('n', '<space>d', require('telescope.builtin').live_grep, { desc = 'search by grep' })
 vim.keymap.set('n', '<space>f', require('telescope.builtin').find_files, { desc = 'search files' })
