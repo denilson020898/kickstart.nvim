@@ -267,14 +267,14 @@ require('lazy').setup({
   --   end,
   -- },
 
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'catppuccin'
-    end,
-  },
+  -- {
+  --   "catppuccin/nvim",
+  --   name = "catppuccin",
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'catppuccin'
+  --   end,
+  -- },
 
   -- {
   --   "ellisonleao/gruvbox.nvim",
@@ -286,6 +286,15 @@ require('lazy').setup({
   -- },
 
   {
+    "rebelot/kanagawa.nvim",
+    priority = 1000,
+    setup = true,
+    config = function()
+      vim.cmd([[colorscheme kanagawa-dragon]])
+    end,
+  },
+
+  {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
@@ -293,7 +302,7 @@ require('lazy').setup({
       options = {
         icons_enabled = false,
         -- theme = 'onedark',
-        theme = 'catppuccin',
+        -- theme = 'catppuccin',
         component_separators = '|',
         section_separators = '',
       },
