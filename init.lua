@@ -157,6 +157,10 @@ require('lazy').setup({
 
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
+
+      -- CUSTOM DENILSON CMP
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-calc",
     },
   },
 
@@ -264,14 +268,35 @@ require('lazy').setup({
     end,
   },
 
-  -- NOTE: Plugins can specify dependencies.
-  --
-  -- The dependencies are proper plugin specifications as well - anything
-  -- you do for a plugin at the top level, you can do for a dependency.
-  --
-  -- Use the `dependencies` key to specify the dependencies of a particular plugin
+  {
+    -- Set lualine as statusline
+    'nvim-lualine/lualine.nvim',
+    -- See `:help lualine.txt`
+    opts = {
+      options = {
+        icons_enabled = false,
+        -- theme = 'onedark',
+        theme = 'catppuccin',
+        component_separators = '|',
+        section_separators = '',
+      },
+    },
+  },
 
-  { -- Fuzzy Finder (files, lsp, etc)
+  {
+    -- Add indentation guides even on blank lines
+    'lukas-reineke/indent-blankline.nvim',
+    -- Enable `lukas-reineke/indent-blankline.nvim`
+    -- See `:help ibl`
+    main = 'ibl',
+    opts = {},
+  },
+
+  -- "gc" to comment visual regions/lines
+  { 'numToStr/Comment.nvim', opts = {} },
+
+  -- Fuzzy Finder (files, lsp, etc)
+  {
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
     branch = '0.1.x',
@@ -740,6 +765,8 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = 'path' },
+    { name = 'calc' },
+    { name = 'buffer' },
   },
 }
 
