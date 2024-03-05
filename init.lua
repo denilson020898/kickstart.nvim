@@ -1022,7 +1022,12 @@ search_resume = function()
 end
 
 vim.keymap.set('n', '<space>D', search_resume, { noremap = true, desc = 'reuse last spectre search' })
-vim.keymap.set('n', '<space>s', require('spectre').open, { noremap = true, desc = 'spectre search' })
+-- vim.keymap.set('n', '<space>s', require('spectre').open, { noremap = true, desc = 'spectre search' })
+
+vim.keymap.set('n', '<space>s', function ()
+  require('spectre').open({ is_insert_mode = true })
+end, { noremap = true, desc = 'spectre search' })
+
 vim.keymap.set('n', '<space>sw', function()
   require('spectre').open_visual { select_word = true }
 end, { noremap = true, desc = 'spectre search current word' })
