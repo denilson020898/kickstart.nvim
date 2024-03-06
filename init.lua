@@ -1052,3 +1052,5 @@ vim.keymap.set('n', '<space>;', '<cmd>cprev<cr>', { noremap = true, desc = 'back
 vim.keymap.set('n', '<leader>zz', '<Plug>RestNvimLast', { noremap = true, desc = 'backward quickfixlist' })
 vim.keymap.set('n', '<leader>zx', '<Plug>RestNvim', { noremap = true, desc = 'backward quickfixlist' })
 vim.keymap.set('n', '<leader>zX', '<Plug>RestNvimPreview', { noremap = true, desc = 'backward quickfixlist' })
+
+vim.cmd 'autocmd Filetype javascript setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2'
