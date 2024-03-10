@@ -765,7 +765,7 @@ require('lazy').setup({
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
       -- Load the colorscheme here
-      vim.cmd.colorscheme 'kanagawa-dragon'
+      vim.cmd.colorscheme 'kanagawa'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
@@ -1052,5 +1052,6 @@ vim.keymap.set('n', '<space>;', '<cmd>cprev<cr>', { noremap = true, desc = 'back
 vim.keymap.set('n', '<leader>zz', '<Plug>RestNvimLast', { noremap = true, desc = 'backward quickfixlist' })
 vim.keymap.set('n', '<leader>zx', '<Plug>RestNvim', { noremap = true, desc = 'backward quickfixlist' })
 vim.keymap.set('n', '<leader>zX', '<Plug>RestNvimPreview', { noremap = true, desc = 'backward quickfixlist' })
+vim.keymap.set('t', '<esc>', [[<C-\><C-n>]])
 
 vim.cmd 'autocmd Filetype javascript setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2'
