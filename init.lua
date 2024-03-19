@@ -760,12 +760,16 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
-    'rebelot/kanagawa.nvim',
+
+    -- 'rebelot/kanagawa.nvim',
+    'sainnhe/gruvbox-material',
+
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
       -- Load the colorscheme here
-      vim.cmd.colorscheme 'kanagawa'
+      vim.g.gruvbox_material_background = 'hard'
+      vim.cmd.colorscheme 'gruvbox-material'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
@@ -1055,3 +1059,4 @@ vim.keymap.set('n', '<leader>zX', '<Plug>RestNvimPreview', { noremap = true, des
 vim.keymap.set('t', '<esc>', [[<C-\><C-n>]])
 
 vim.cmd 'autocmd Filetype javascript setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2'
+require('lspconfig').zls.setup({})
