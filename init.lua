@@ -1180,6 +1180,13 @@ vim.cmd 'autocmd Filetype c setlocal expandtab tabstop=2 shiftwidth=2 softtabsto
 vim.cmd 'autocmd Filetype go setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4'
 require('lspconfig').zls.setup {}
 
+vim.keymap.set(
+  'n',
+  '<space>e',
+  '<cmd>redir @+ | echo join([expand("%"),  line(".")], ":") | redir END<cr>',
+  { noremap = true, desc = 'copy current path and line' }
+)
+
 -- vim.keymap.set('n', '<leader>f', function()
 --   require('conform').format { timeout_ms = 500, lsp_fallback = true }
 -- end, { noremap = true, desc = 'Format Conform' })
