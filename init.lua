@@ -1228,7 +1228,7 @@ require('lspconfig').zls.setup {}
 vim.keymap.set(
   'n',
   '<space>e',
-  '<cmd>redir @+ | echo join([expand("%"),  line(".")], ":") | redir END<cr>',
+  [[<cmd>let @+ = trim(execute("echo join([expand('%'),  line('.')], ':')"))<cr>]],
   { noremap = true, desc = 'copy current path and line' }
 )
 
