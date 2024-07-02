@@ -580,14 +580,6 @@ require('lazy').setup({
               group = highlight_augroup,
               callback = vim.lsp.buf.clear_references,
             })
-
-            vim.api.nvim_create_autocmd('LspDetach', {
-              group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
-              callback = function(event2)
-                vim.lsp.buf.clear_references()
-                vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
-              end,
-            })
           end
 
           -- The following code creates a keymap to toggle inlay hints in your
@@ -599,6 +591,14 @@ require('lazy').setup({
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
             end, '[T]oggle Inlay [H]ints')
           end
+        end,
+      })
+
+      vim.api.nvim_create_autocmd('LspDetach', {
+        group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
+        callback = function(event)
+          vim.lsp.buf.clear_references()
+          vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event.buf }
         end,
       })
 
@@ -665,6 +665,7 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
 
+        -- 'pylsp',
         'ruff',
         'ruff-lsp',
         'jq',
@@ -873,7 +874,6 @@ require('lazy').setup({
     end,
   },
 
-
   -- {
   --   'rose-pine/neovim',
   --   name = 'rose-pine',
@@ -883,13 +883,23 @@ require('lazy').setup({
   --     vim.cmd.colorscheme 'rose-pine'
   --   end,
   -- },
+
+  -- {
+  --   'sainnhe/gruvbox-material',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.g.gruvbox_material_background = 'hard'
+  --     vim.cmd.colorscheme 'gruvbox-material'
+  --   end,
+  -- },
+
   {
-    'sainnhe/gruvbox-material',
+    'slugbyte/lackluster.nvim',
     lazy = false,
     priority = 1000,
     config = function()
-      vim.g.gruvbox_material_background = 'hard'
-      vim.cmd.colorscheme 'gruvbox-material'
+      vim.cmd.colorscheme 'lackluster'
     end,
   },
 
@@ -1016,10 +1026,10 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  require 'kickstart.plugins.debug',
+  -- require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  require 'kickstart.plugins.autopairs',
+  -- require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
@@ -1154,12 +1164,12 @@ end, { silent = true, desc = 'neotest stop run nearest' })
 vim.keymap.set('n', '<leader>J', function()
   require('neotest').summary.toggle()
 end, { silent = true, desc = 'neotest toggle summary' })
-vim.keymap.set('n', '<leader>h', function()
-  require('neotest').run.run { strategy = 'dap' }
-end, { silent = true, desc = 'neotest debug run nearest' })
-vim.keymap.set('n', '<leader>H', function()
-  require('neotest').run.run_last { strategy = 'dap' }
-end, { silent = true, desc = 'neotest debug run last' })
+-- vim.keymap.set('n', '<leader>h', function()
+--   require('neotest').run.run { strategy = 'dap' }
+-- end, { silent = true, desc = 'neotest debug run nearest' })
+-- vim.keymap.set('n', '<leader>H', function()
+--   require('neotest').run.run_last { strategy = 'dap' }
+-- end, { silent = true, desc = 'neotest debug run last' })
 vim.keymap.set('n', '<leader>L', function()
   require('neotest').output_panel.clear()
   require('neotest').output_panel.open()
