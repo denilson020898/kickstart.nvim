@@ -689,7 +689,15 @@ require('lazy').setup({
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
         -- javascript = { { "prettierd", "prettier" } },
+        sql = { 'sqlfmt' },
         zig = { 'zig fmt' },
+      },
+      formatters = {
+        sqlfmt = {
+          exe = 'sqlfmt',
+          stdin = true,
+          args = { '-', '--fast', '--line-length', '80' },
+        },
       },
     },
   },
@@ -843,13 +851,35 @@ require('lazy').setup({
   -- },
 
   {
-    'slugbyte/lackluster.nvim',
+    'sainnhe/sonokai',
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'lackluster'
+      -- Optionally configure and load the colorscheme
+      -- directly inside the plugin declaration.
+      vim.g.sonokai_enable_italic = true
+      -- vim.g.sonokai_style = 'espresso'
+      vim.cmd.colorscheme 'sonokai'
     end,
   },
+
+  -- {
+  --   'slugbyte/lackluster.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'lackluster-dark'
+  --   end,
+  -- },
+
+  -- {
+  --   'kdheepak/monochrome.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'monochrome'
+  --   end,
+  -- },
 
   -- {
   --   "phha/zenburn.nvim",
