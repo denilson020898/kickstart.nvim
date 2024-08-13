@@ -725,7 +725,7 @@ require('lazy').setup({
         json = { 'jq' },
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        python = { "isort", "black" },
+        python = { 'isort', 'black' },
 
         -- python = function(bufnr)
         --   if require('conform').get_formatter_info('ruff_format', bufnr).available then
@@ -1061,8 +1061,8 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
@@ -1281,3 +1281,5 @@ end, { noremap = true, desc = 'Format Conform' })
 vim.keymap.set('v', '<leader>f', function()
   require('conform').format { timeout_ms = 500, lsp_fallback = true }
 end, { noremap = true, desc = 'Format Conform' })
+
+vim.keymap.set('n', '<leader>u', '<cmd>UndotreeToggle<cr>', { noremap = true, desc = 'toggle undotree' })
