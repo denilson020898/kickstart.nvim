@@ -665,12 +665,12 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
 
-        -- 'pylsp',
-        'ruff',
-        'ruff-lsp',
+        'pyright',
         'jq',
         'sqlls',
         'tsserver',
+
+        'lemminx',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -725,14 +725,16 @@ require('lazy').setup({
         json = { 'jq' },
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "ruff" },
-        python = function(bufnr)
-          if require('conform').get_formatter_info('ruff_format', bufnr).available then
-            return { 'ruff_format' }
-          else
-            return { 'isort', 'black' }
-          end
-        end,
+        python = { "isort", "black" },
+
+        -- python = function(bufnr)
+        --   if require('conform').get_formatter_info('ruff_format', bufnr).available then
+        --     return { 'ruff_format' }
+        --   else
+        --     return { 'isort', 'black' }
+        --   end
+        -- end,
+
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
         -- javascript = { { "prettierd", "prettier" } },
@@ -892,28 +894,28 @@ require('lazy').setup({
   --   end,
   -- },
 
-  -- {
-  --   'sainnhe/gruvbox-material',
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     vim.g.gruvbox_material_background = 'hard'
-  --     vim.cmd.colorscheme 'gruvbox-material'
-  --   end,
-  -- },
-
   {
-    'sainnhe/sonokai',
+    'sainnhe/gruvbox-material',
     lazy = false,
     priority = 1000,
     config = function()
-      -- Optionally configure and load the colorscheme
-      -- directly inside the plugin declaration.
-      vim.g.sonokai_enable_italic = true
-      -- vim.g.sonokai_style = 'espresso'
-      vim.cmd.colorscheme 'sonokai'
+      vim.g.gruvbox_material_background = 'hard'
+      vim.cmd.colorscheme 'gruvbox-material'
     end,
   },
+
+  -- {
+  --   'sainnhe/sonokai',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     -- Optionally configure and load the colorscheme
+  --     -- directly inside the plugin declaration.
+  --     vim.g.sonokai_enable_italic = true
+  --     -- vim.g.sonokai_style = 'espresso'
+  --     vim.cmd.colorscheme 'sonokai'
+  --   end,
+  -- },
 
   -- {
   --   'slugbyte/lackluster.nvim',
@@ -1272,10 +1274,10 @@ vim.keymap.set(
   { noremap = true, desc = 'copy current path and line' }
 )
 
--- vim.keymap.set('n', '<leader>f', function()
---   require('conform').format { timeout_ms = 500, lsp_fallback = true }
--- end, { noremap = true, desc = 'Format Conform' })
---
--- vim.keymap.set('v', '<leader>f', function()
---   require('conform').format { timeout_ms = 500, lsp_fallback = true }
--- end, { noremap = true, desc = 'Format Conform' })
+vim.keymap.set('n', '<leader>f', function()
+  require('conform').format { timeout_ms = 500, lsp_fallback = true }
+end, { noremap = true, desc = 'Format Conform' })
+
+vim.keymap.set('v', '<leader>f', function()
+  require('conform').format { timeout_ms = 500, lsp_fallback = true }
+end, { noremap = true, desc = 'Format Conform' })
