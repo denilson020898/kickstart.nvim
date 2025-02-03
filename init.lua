@@ -926,41 +926,6 @@ require('lazy').setup({
   --   end,
   -- },
 
-  -- {
-  --   'kdheepak/monochrome.nvim',
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     vim.cmd.colorscheme 'monochrome'
-  --   end,
-  -- },
-
-  -- {
-  --   "phha/zenburn.nvim",
-  --   -- lazy = false,
-  --   -- priority = 1000,
-  --   config = function()
-  --     -- Load the colorscheme here
-  --     vim.cmd.colorscheme 'zenburn'
-  --
-  --     -- You can configure highlights by doing something like:
-  --     -- vim.cmd.hi 'Comment gui=none'
-  --   end,
-  -- },
-
-  -- {
-  --   "catppuccin/nvim",
-  --   -- lazy = false,
-  --   -- priority = 1000,
-  --   config = function()
-  --     -- Load the colorscheme here
-  --     vim.cmd.colorscheme 'catppuccin-frappe'
-  --
-  --     -- You can configure highlights by doing something like:
-  --     -- vim.cmd.hi 'Comment gui=none'
-  --   end,
-  -- },
-
   -- { -- You can easily change to a different colorscheme.
   --   -- Change the name of the colorscheme plugin below, and then
   --   -- change the command in the config to whatever the name of that colorscheme is.
@@ -1063,7 +1028,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
@@ -1244,8 +1209,8 @@ vim.keymap.set('n', '<space>sc', "viw:lua require('spectre').open_file_search()<
 vim.keymap.set('n', '<space>gg', function()
   require('neogit').open()
 end, { noremap = true, desc = 'neogit' })
-vim.keymap.set('n', '<space>gb', '<cmd>GitBlameToggle<cr>', { noremap = true })
-vim.keymap.set('n', '<space>go', '<cmd>GitBlameOpenCommitURL<cr>', { noremap = true })
+-- vim.keymap.set('n', '<space>gb', '<cmd>GitBlameToggle<cr>', { noremap = true })
+-- vim.keymap.set('n', '<space>go', '<cmd>GitBlameOpenCommitURL<cr>', { noremap = true })
 vim.keymap.set('n', 'zh', '35zh', { noremap = true })
 vim.keymap.set('n', 'zl', '35zl', { noremap = true })
 
