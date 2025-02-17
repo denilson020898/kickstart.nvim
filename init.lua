@@ -1068,61 +1068,6 @@ require('lazy').setup({
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 
--- MY CUSTOM LINES
-local harpoon = require 'harpoon'
-
--- REQUIRED
-harpoon:setup {
-  settings = {
-    save_on_toggle = true,
-    -- sync_on_ui_close = true,
-  },
-}
--- REQUIRED
-
-vim.keymap.set('n', '<space>k', function()
-  harpoon:list():append()
-end)
--- vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-vim.keymap.set('n', '<space>j', function()
-  harpoon.ui:toggle_quick_menu(harpoon:list())
-end)
-
-vim.keymap.set('n', '<space>1', function()
-  harpoon:list():select(1)
-end)
-vim.keymap.set('n', '<space>2', function()
-  harpoon:list():select(2)
-end)
-vim.keymap.set('n', '<space>3', function()
-  harpoon:list():select(3)
-end)
-vim.keymap.set('n', '<space>4', function()
-  harpoon:list():select(4)
-end)
-vim.keymap.set('n', '<space>5', function()
-  harpoon:list():select(5)
-end)
-vim.keymap.set('n', '<space>6', function()
-  harpoon:list():select(6)
-end)
-
--- Toggle previous & next buffers stored within Harpoon list
--- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
--- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
-
-vim.keymap.set('n', '<space>i', function()
-  harpoon:list():next()
-end)
-vim.keymap.set('n', '<space>u', function()
-  harpoon:list():prev()
-end)
-
--- vim.keymap.set('n', '<space>j', require("harpoon.ui").toggle_quick_menu, { desc = '[j] harpoon toggle quick menu' })
--- vim.keymap.set('n', '<space>k', require("harpoon.mark").add_file, { desc = '[k] harpoon add current file' })
--- vim.keymap.set('n', '<space>i', require("harpoon.ui").nav_next, { desc = '[k] harpoon nav next' })
--- vim.keymap.set('n', '<space>u', require("harpoon.ui").nav_prev, { desc = '[k] harpoon nav prev' })
-
 -- CUSTOM DENILSON KEYBINDINGS
 vim.keymap.set('i', 'jj', '<esc>', { noremap = true })
 vim.keymap.set('i', 'jk', '<esc>', { noremap = true })
@@ -1254,4 +1199,3 @@ vim.keymap.set('v', '<leader>f', function()
   require('conform').format { timeout_ms = 500, lsp_fallback = true }
 end, { noremap = true, desc = 'Format Conform' })
 
-vim.keymap.set('n', '<leader>u', '<cmd>UndotreeToggle<cr>', { noremap = true, desc = 'toggle undotree' })
