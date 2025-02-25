@@ -898,12 +898,11 @@ require('lazy').setup({
   -- },
 
   {
-    'sainnhe/gruvbox-material',
+    'olimorris/onedarkpro.nvim',
     lazy = false,
     priority = 1000,
     config = function()
-      vim.g.gruvbox_material_background = 'hard'
-      vim.cmd.colorscheme 'gruvbox-material'
+      vim.cmd.colorscheme 'onedark_dark'
     end,
   },
 
