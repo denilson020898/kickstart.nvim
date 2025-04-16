@@ -87,8 +87,8 @@ P.S. You can delete this when you're done too. It's your config now! :)
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.mapleader = ','
+vim.g.maplocalleader = ','
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
@@ -868,25 +868,35 @@ require('lazy').setup({
     },
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
-      }
+  -- { -- You can easily change to a different colorscheme.
+  --   -- Change the name of the colorscheme plugin below, and then
+  --   -- change the command in the config to whatever the name of that colorscheme is.
+  --   --
+  --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  --   'folke/tokyonight.nvim',
+  --   priority = 1000, -- Make sure to load this before all the other start plugins.
+  --   config = function()
+  --     ---@diagnostic disable-next-line: missing-fields
+  --     require('tokyonight').setup {
+  --       styles = {
+  --         comments = { italic = false }, -- Disable italics in comments
+  --       },
+  --     }
+  --
+  --     -- Load the colorscheme here.
+  --     -- Like many other themes, this one has different styles, and you could load
+  --     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+  --     vim.cmd.colorscheme 'tokyonight-night'
+  --   end,
+  -- },
 
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+  {
+    'sainnhe/gruvbox-material',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.g.gruvbox_material_background = 'hard'
+      vim.cmd.colorscheme 'gruvbox-material'
     end,
   },
 
@@ -976,7 +986,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
@@ -1006,3 +1016,135 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+--
+
+-- CUSTOM DENILSON KEYBINDINGS
+vim.keymap.set('i', 'jj', '<esc>', { noremap = true })
+vim.keymap.set('i', 'jk', '<esc>', { noremap = true })
+vim.keymap.set('i', 'kj', '<esc>', { noremap = true })
+
+vim.keymap.set('n', '<space>tt', '<cmd>Telescope<cr>', { noremap = true, desc = 'telescope main' })
+vim.keymap.set('n', '<space>d', require('telescope.builtin').live_grep, { desc = 'search by grep' })
+vim.keymap.set('n', '<space>f', require('telescope.builtin').find_files, { desc = 'search files' })
+
+vim.keymap.set('n', '<space>o', function()
+  require('telescope.builtin').find_files { cwd = require('telescope.utils').buffer_dir() }
+end, { desc = 'search files in cwd' })
+
+vim.keymap.set('n', '<space>r', require('telescope.builtin').resume, { desc = 'resume telescope' })
+vim.keymap.set('n', '<space><space>', '<cmd>b#<cr>', { noremap = true, desc = 'previous buffer' })
+vim.keymap.set('v', '>', '>gv', { noremap = true })
+vim.keymap.set('v', '<', '<gv', { noremap = true })
+vim.keymap.set({ 'n', 'v' }, '<leader>M', '<cmd>HopAnywhere<cr>', { noremap = true })
+vim.keymap.set({ 'n', 'v' }, '<leader>m', '<cmd>HopWord<cr>', { noremap = true })
+
+vim.keymap.set('n', '<space>q', require('telescope.builtin').quickfix, { desc = 'telescope quickfix' })
+vim.keymap.set('n', '<space>Q', require('telescope.builtin').quickfixhistory, { desc = 'telescope quickfix history' })
+
+vim.keymap.set('n', '<space>c', function()
+  require('treesitter-context').go_to_context()
+end, { silent = true, desc = 'parent treesitter context' })
+
+vim.keymap.set('n', '<leader><space>', function()
+  require('neotest').run.run()
+end, { silent = true, desc = 'neotest start run nearest' })
+vim.keymap.set('n', '<leader>l', function()
+  require('neotest').run.run_last()
+end, { silent = true, desc = 'neotest start run last' })
+vim.keymap.set('n', '<leader>j', function()
+  require('neotest').run.run(vim.fn.expand '%')
+end, { silent = true, desc = 'neotest run this file' })
+vim.keymap.set('n', '<leader>.', function()
+  require('neotest').output.open { enter = true }
+end, { silent = true, desc = 'neotest open output' })
+vim.keymap.set('n', '<leader><', function()
+  require('neotest').run.stop()
+end, { silent = true, desc = 'neotest stop run nearest' })
+vim.keymap.set('n', '<leader>J', function()
+  require('neotest').summary.toggle()
+end, { silent = true, desc = 'neotest toggle summary' })
+-- vim.keymap.set('n', '<leader>h', function()
+--   require('neotest').run.run { strategy = 'dap' }
+-- end, { silent = true, desc = 'neotest debug run nearest' })
+-- vim.keymap.set('n', '<leader>H', function()
+--   require('neotest').run.run_last { strategy = 'dap' }
+-- end, { silent = true, desc = 'neotest debug run last' })
+vim.keymap.set('n', '<leader>L', function()
+  require('neotest').output_panel.clear()
+  require('neotest').output_panel.open()
+end, { silent = true, desc = 'neotest show output panel' })
+
+vim.keymap.set('n', '<leader>X', function()
+  require('neotest').watch.toggle(vim.fn.expand '%')
+end, { silent = true, desc = 'neotest run nearest' })
+
+spectre_state = require('spectre.actions').get_state()
+is_file = spectre_state.query.is_file
+path = spectre_state.query.path
+replace_query = spectre_state.query.replace_query
+search_query = spectre_state.query.search_query
+
+search_resume = function()
+  spectre_state = require('spectre.actions').get_state()
+  is_file = spectre_state.query.is_file
+  path = spectre_state.query.path
+  replace_query = spectre_state.query.replace_query
+  search_query = spectre_state.query.search_query
+  require('spectre').open {
+    search_text = search_query,
+    replace_text = replace_query,
+    path = path,
+  }
+end
+
+vim.keymap.set('n', '<space>D', search_resume, { noremap = true, desc = 'reuse last spectre search' })
+
+vim.keymap.set('n', '<space>s', function()
+  require('spectre').open()
+end, { noremap = true, desc = 'spectre search' })
+
+vim.keymap.set('n', '<space>sw', function()
+  require('spectre').open_visual { select_word = true }
+end, { noremap = true, desc = 'spectre search current word' })
+vim.keymap.set('v', '<space>s', "<cmd>lua require('spectre').open_visual()<cr>", { noremap = true })
+vim.keymap.set('n', '<space>sc', "viw:lua require('spectre').open_file_search()<cr>", { noremap = true })
+vim.keymap.set('n', '<space>gg', function()
+  require('neogit').open()
+end, { noremap = true, desc = 'neogit' })
+-- vim.keymap.set('n', '<space>gb', '<cmd>GitBlameToggle<cr>', { noremap = true })
+-- vim.keymap.set('n', '<space>go', '<cmd>GitBlameOpenCommitURL<cr>', { noremap = true })
+vim.keymap.set('n', 'zh', '35zh', { noremap = true })
+vim.keymap.set('n', 'zl', '35zl', { noremap = true })
+
+vim.keymap.set('n', '<C-A-h>', '5<C-w><', { noremap = true })
+vim.keymap.set('n', '<C-A-j>', '5<C-w>-', { noremap = true })
+vim.keymap.set('n', '<C-A-k>', '5<C-w>+', { noremap = true })
+vim.keymap.set('n', '<C-A-l>', '5<C-w>>', { noremap = true })
+
+vim.keymap.set('n', '<space>h', '<cmd>cnext<cr>', { noremap = true, desc = 'forward quickfixlist' })
+vim.keymap.set('n', '<space>;', '<cmd>cprev<cr>', { noremap = true, desc = 'backward quickfixlist' })
+
+vim.keymap.set('n', '<leader>zz', '<Plug>RestNvimLast', { noremap = true, desc = 'backward quickfixlist' })
+vim.keymap.set('n', '<leader>zx', '<Plug>RestNvim', { noremap = true, desc = 'backward quickfixlist' })
+vim.keymap.set('n', '<leader>zX', '<Plug>RestNvimPreview', { noremap = true, desc = 'backward quickfixlist' })
+vim.keymap.set('t', '<esc>', [[<C-\><C-n>]])
+
+vim.cmd 'autocmd Filetype javascript setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2'
+vim.cmd 'autocmd Filetype c setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2'
+vim.cmd 'autocmd Filetype go setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4'
+require('lspconfig').zls.setup {}
+
+vim.keymap.set(
+  'n',
+  '<space>e',
+  [[<cmd>let @+ = trim(execute("echo join([expand('%'),  line('.')], ':')"))<cr>]],
+  { noremap = true, desc = 'copy current path and line' }
+)
+
+vim.keymap.set('n', '<leader>f', function()
+  require('conform').format { timeout_ms = 500, lsp_fallback = true }
+end, { noremap = true, desc = 'Format Conform' })
+
+vim.keymap.set('v', '<leader>f', function()
+  require('conform').format { timeout_ms = 500, lsp_fallback = true }
+end, { noremap = true, desc = 'Format Conform' })
