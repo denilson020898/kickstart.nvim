@@ -892,13 +892,22 @@ require('lazy').setup({
   --   end,
   -- },
 
+  -- {
+  --   'sainnhe/gruvbox-material',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.g.gruvbox_material_background = 'hard'
+  --     vim.cmd.colorscheme 'gruvbox-material'
+  --   end,
+  -- },
+
   {
-    'sainnhe/gruvbox-material',
+    'catppuccin/nvim',
     lazy = false,
     priority = 1000,
     config = function()
-      vim.g.gruvbox_material_background = 'hard'
-      vim.cmd.colorscheme 'gruvbox-material'
+      vim.cmd.colorscheme 'catppuccin-mocha'
     end,
   },
 
@@ -1150,3 +1159,10 @@ end, { noremap = true, desc = 'Format Conform' })
 vim.keymap.set('v', '<leader>f', function()
   require('conform').format { timeout_ms = 500, lsp_fallback = true }
 end, { noremap = true, desc = 'Format Conform' })
+
+vim.cmd [[
+  highlight Normal guibg=none
+  highlight NonText guibg=none
+  highlight Normal ctermbg=none
+  highlight NonText ctermbg=none
+]]
