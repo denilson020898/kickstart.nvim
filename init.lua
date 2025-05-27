@@ -768,6 +768,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        elixir = { 'mix' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -854,7 +855,7 @@ require('lazy').setup({
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev' },
+        default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
         },
@@ -904,7 +905,7 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       vim.g.gruvbox_material_background = 'hard'
-      vim.g.gruvbox_material_transparent_background = 2
+      vim.g.gruvbox_material_transparent_background = 1
       vim.cmd.colorscheme 'gruvbox-material'
     end,
   },
