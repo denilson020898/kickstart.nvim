@@ -769,6 +769,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         elixir = { 'mix' },
+        -- xml = { 'xmlformatter' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -1099,6 +1100,7 @@ vim.keymap.set('n', '<C-A-l>', '5<C-w>>', { noremap = true })
 vim.cmd 'autocmd Filetype javascript setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2'
 vim.cmd 'autocmd Filetype c setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2'
 vim.cmd 'autocmd Filetype go setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4'
+vim.cmd 'autocmd Filetype xml setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4'
 
 vim.keymap.set('n', '<space>q', require('telescope.builtin').quickfix, { desc = 'telescope quickfix' })
 vim.keymap.set('n', '<space>Q', require('telescope.builtin').quickfixhistory, { desc = 'telescope quickfix history' })
@@ -1125,3 +1127,7 @@ vim.keymap.set('n', '<leader>ee', 'oif err != nil {<CR>}<Esc>Oreturn err<Esc>')
 --     "<leader>el",
 --     "oif err != nil {<CR>}<Esc>O.logger.Error(\"error\", \"error\", err)<Esc>F.;i"
 -- )
+--
+vim.keymap.set('n', '<space>gb', function()
+  require('blame-column').toggle()
+end, { desc = 'Git: toggle blame' })
