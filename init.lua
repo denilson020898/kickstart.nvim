@@ -928,14 +928,32 @@ require('lazy').setup({
   --   end,
   -- },
 
+  -- {
+  --   'sainnhe/gruvbox-material',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.g.gruvbox_material_background = 'hard'
+  --     vim.g.gruvbox_material_transparent_background = 1
+  --     vim.cmd.colorscheme 'gruvbox-material'
+  --   end,
+  -- },
+
   {
-    'sainnhe/gruvbox-material',
+    'sainnhe/sonokai',
     lazy = false,
     priority = 1000,
     config = function()
-      vim.g.gruvbox_material_background = 'hard'
-      vim.g.gruvbox_material_transparent_background = 1
-      vim.cmd.colorscheme 'gruvbox-material'
+      -- Optionally configure and load the colorscheme
+      -- directly inside the plugin declaration.
+      -- Available values:   `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
+
+      -- vim.g.sonokai_style = 'espresso'
+      vim.g.sonokai_style = 'shusia'
+      -- vim.g.sonokai_style = 'maia'
+      --
+      vim.g.sonokai_enable_italic = true
+      vim.cmd.colorscheme 'sonokai'
     end,
   },
 
