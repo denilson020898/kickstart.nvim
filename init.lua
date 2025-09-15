@@ -780,20 +780,20 @@ require('lazy').setup({
     },
     opts = {
       notify_on_error = false,
-      format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true, py = true }
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          return nil
-        else
-          return {
-            timeout_ms = 500,
-            lsp_format = 'fallback',
-          }
-        end
-      end,
+      -- format_on_save = function(bufnr)
+      --   -- Disable "format_on_save lsp_fallback" for languages that don't
+      --   -- have a well standardized coding style. You can add additional
+      --   -- languages here or re-enable it for the disabled ones.
+      --   local disable_filetypes = { c = true, cpp = true, py = true }
+      --   if disable_filetypes[vim.bo[bufnr].filetype] then
+      --     return nil
+      --   else
+      --     return {
+      --       timeout_ms = 500,
+      --       lsp_format = 'fallback',
+      --     }
+      --   end
+      -- end,
       formatters_by_ft = {
         lua = { 'stylua' },
         elixir = { 'mix' },
@@ -928,34 +928,34 @@ require('lazy').setup({
   --   end,
   -- },
 
-  -- {
-  --   'sainnhe/gruvbox-material',
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     vim.g.gruvbox_material_background = 'hard'
-  --     vim.g.gruvbox_material_transparent_background = 1
-  --     vim.cmd.colorscheme 'gruvbox-material'
-  --   end,
-  -- },
-
   {
-    'sainnhe/sonokai',
+    'sainnhe/gruvbox-material',
     lazy = false,
     priority = 1000,
     config = function()
-      -- Optionally configure and load the colorscheme
-      -- directly inside the plugin declaration.
-      -- Available values:   `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
-
-      -- vim.g.sonokai_style = 'espresso'
-      vim.g.sonokai_style = 'shusia'
-      -- vim.g.sonokai_style = 'maia'
-      --
-      vim.g.sonokai_enable_italic = true
-      vim.cmd.colorscheme 'sonokai'
+      -- vim.g.gruvbox_material_background = 'hard'
+      vim.g.gruvbox_material_transparent_background = 1
+      vim.cmd.colorscheme 'gruvbox-material'
     end,
   },
+
+  -- {
+  --   'sainnhe/sonokai',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     -- Optionally configure and load the colorscheme
+  --     -- directly inside the plugin declaration.
+  --     -- Available values:   `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
+  --
+  --     -- vim.g.sonokai_style = 'espresso'
+  --     vim.g.sonokai_style = 'shusia'
+  --     -- vim.g.sonokai_style = 'maia'
+  --     --
+  --     vim.g.sonokai_enable_italic = true
+  --     vim.cmd.colorscheme 'sonokai'
+  --   end,
+  -- },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
@@ -1143,7 +1143,7 @@ vim.keymap.set('n', '<C-A-l>', '5<C-w>>', { noremap = true })
 -- end, { noremap = true, desc = 'Format Conform' })
 
 -- ???
-vim.cmd 'autocmd Filetype javascript setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2'
+vim.cmd 'autocmd Filetype javascript setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4'
 vim.cmd 'autocmd Filetype c setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2'
 vim.cmd 'autocmd Filetype go setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4'
 vim.cmd 'autocmd Filetype xml setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4'
@@ -1156,23 +1156,23 @@ vim.keymap.set('n', '<space>Q', require('telescope.builtin').quickfixhistory, { 
 
 vim.keymap.set('n', '<leader>ee', 'oif err != nil {<CR>}<Esc>Oreturn err<Esc>')
 
--- vim.keymap.set(
---     "n",
---     "<leader>ea",
---     "oassert.NoError(err, \"\")<Esc>F\";a"
--- )
---
--- vim.keymap.set(
---     "n",
---     "<leader>ef",
---     "oif err != nil {<CR>}<Esc>Olog.Fatalf(\"error: %s\\n\", err.Error())<Esc>jj"
--- )
---
--- vim.keymap.set(
---     "n",
---     "<leader>el",
---     "oif err != nil {<CR>}<Esc>O.logger.Error(\"error\", \"error\", err)<Esc>F.;i"
--- )
+vim.keymap.set(
+    "n",
+    "<leader>ea",
+    "oassert.NoError(err, \"\")<Esc>F\";a"
+)
+
+vim.keymap.set(
+    "n",
+    "<leader>ef",
+    "oif err != nil {<CR>}<Esc>Olog.Fatalf(\"error: %s\\n\", err.Error())<Esc>jj"
+)
+
+vim.keymap.set(
+    "n",
+    "<leader>el",
+    "oif err != nil {<CR>}<Esc>O.logger.Error(\"error\", \"error\", err)<Esc>F.;i"
+)
 --
 vim.keymap.set('n', '<space>gb', function()
   require('blame-column').toggle()
