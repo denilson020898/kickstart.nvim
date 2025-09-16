@@ -933,7 +933,7 @@ require('lazy').setup({
     lazy = false,
     priority = 1000,
     config = function()
-      -- vim.g.gruvbox_material_background = 'hard'
+      vim.g.gruvbox_material_background = 'hard'
       vim.g.gruvbox_material_transparent_background = 1
       vim.cmd.colorscheme 'gruvbox-material'
     end,
@@ -1127,6 +1127,8 @@ vim.keymap.set('n', '<space>s', function()
   require('grug-far').open()
 end, { noremap = true, desc = 'grug far search' })
 
+-- lua require('grug-far').open({ prefills = { filesFilter= '\*.py *.xml *.js' } })
+
 vim.keymap.set('v', '<space>s', function()
     require('grug-far').with_visual_selection()
 end, 
@@ -1190,3 +1192,8 @@ vim.keymap.set('n', '<space>gf', '<CMD>GitBlameCopyFileURL<CR>', { desc = 'copie
 vim.keymap.set('n', '<space>w', '<c-w>|', {})
 vim.keymap.set('n', '<space>e', '<c-w>=', {})
 
+-- vim.cmd.colorscheme 'lunaperche'
+--
+-- highlight GrugFarResultsMatch ctermbg=#a9b665 guibg=#a9b665
+-- vim.api.nvim_set_hl(0, 'GrugFarResultsMatch', { bg = 'lime' })
+vim.api.nvim_set_hl(0, 'GrugFarResultsMatch', { bg = '#7b2c2f' })

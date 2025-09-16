@@ -10,6 +10,7 @@ return {
       -- there are no required options atm
       startInInsertMode = false,
       -- showCompactInputs = true,
+      windowCreationCommand = 'tab split',
     }
   end,
 }
