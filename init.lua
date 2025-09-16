@@ -88,7 +88,7 @@ P.S. You can delete this when you're done too. It's your config now! :)
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ','
-vim.g.maplocalleader = ','
+vim.g.maplocalleader = '\\'
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
@@ -1088,35 +1088,53 @@ vim.keymap.set('v', '<', '<gv', { noremap = true })
 vim.keymap.set({ 'n', 'v' }, '<leader>M', '<cmd>HopAnywhere<cr>', { noremap = true })
 vim.keymap.set({ 'n', 'v' }, '<leader>m', '<cmd>HopWord<cr>', { noremap = true })
 
-spectre_state = require('spectre.actions').get_state()
-is_file = spectre_state.query.is_file
-path = spectre_state.query.path
-replace_query = spectre_state.query.replace_query
-search_query = spectre_state.query.search_query
+-- spectre_state = require('spectre.actions').get_state()
+-- is_file = spectre_state.query.is_file
+-- path = spectre_state.query.path
+-- replace_query = spectre_state.query.replace_query
+-- search_query = spectre_state.query.search_query
+--
+-- search_resume = function()
+--   spectre_state = require('spectre.actions').get_state()
+--   is_file = spectre_state.query.is_file
+--   path = spectre_state.query.path
+--   replace_query = spectre_state.query.replace_query
+--   search_query = spectre_state.query.search_query
+--   require('spectre').open {
+--     search_text = search_query,
+--     replace_text = replace_query,
+--     path = path,
+--   }
+-- end
+--
+-- vim.keymap.set('n', '<space>D', search_resume, { noremap = true, desc = 'reuse last spectre search' })
+-- vim.keymap.set('n', '<space>s', function()
+--   require('spectre').open()
+-- end, { noremap = true, desc = 'spectre search' })
+--
+-- vim.keymap.set('n', '<space>sw', function()
+--   require('spectre').open_visual { select_word = true }
+-- end, { noremap = true, desc = 'spectre search current word' })
+-- vim.keymap.set('v', '<space>s', "<cmd>lua require('spectre').open_visual()<cr>", { noremap = true })
+-- vim.keymap.set('n', '<space>sc', "viw:lua require('spectre').open_file_search()<cr>", { noremap = true })
 
-search_resume = function()
-  spectre_state = require('spectre.actions').get_state()
-  is_file = spectre_state.query.is_file
-  path = spectre_state.query.path
-  replace_query = spectre_state.query.replace_query
-  search_query = spectre_state.query.search_query
-  require('spectre').open {
-    search_text = search_query,
-    replace_text = replace_query,
-    path = path,
-  }
-end
-
-vim.keymap.set('n', '<space>D', search_resume, { noremap = true, desc = 'reuse last spectre search' })
-vim.keymap.set('n', '<space>s', function()
-  require('spectre').open()
-end, { noremap = true, desc = 'spectre search' })
-
+-- ###########
 vim.keymap.set('n', '<space>sw', function()
-  require('spectre').open_visual { select_word = true }
-end, { noremap = true, desc = 'spectre search current word' })
-vim.keymap.set('v', '<space>s', "<cmd>lua require('spectre').open_visual()<cr>", { noremap = true })
-vim.keymap.set('n', '<space>sc', "viw:lua require('spectre').open_file_search()<cr>", { noremap = true })
+    require('grug-far').open({ prefills = { search = vim.fn.expand("<cword>") } })
+end, { noremap = true, desc = 'Launch with the current word under the cursor as the search string'})
+
+vim.keymap.set('n', '<space>s', function()
+  require('grug-far').open()
+end, { noremap = true, desc = 'grug far search' })
+
+vim.keymap.set('v', '<space>s', function()
+    require('grug-far').with_visual_selection()
+end, 
+{ noremap = true })
+
+
+-- ###########
+
 vim.keymap.set('n', '<space>gg', function()
   require('neogit').open()
 end, { noremap = true, desc = 'neogit' })
@@ -1133,26 +1151,14 @@ vim.keymap.set('n', '<C-A-j>', '5<C-w>-', { noremap = true })
 vim.keymap.set('n', '<C-A-k>', '5<C-w>+', { noremap = true })
 vim.keymap.set('n', '<C-A-l>', '5<C-w>>', { noremap = true })
 
--- ???
--- vim.keymap.set('n', '<leader>f', function()
---   require('conform').format { timeout_ms = 500, lsp_fallback = true }
--- end, { noremap = true, desc = 'Format Conform' })
---
--- vim.keymap.set('v', '<leader>f', function()
---   require('conform').format { timeout_ms = 500, lsp_fallback = true }
--- end, { noremap = true, desc = 'Format Conform' })
-
--- ???
 vim.cmd 'autocmd Filetype javascript setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4'
 vim.cmd 'autocmd Filetype c setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2'
 vim.cmd 'autocmd Filetype go setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4'
 vim.cmd 'autocmd Filetype xml setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4'
+vim.cmd 'autocmd Filetype lua setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4'
 
 vim.keymap.set('n', '<space>q', require('telescope.builtin').quickfix, { desc = 'telescope quickfix' })
 vim.keymap.set('n', '<space>Q', require('telescope.builtin').quickfixhistory, { desc = 'telescope quickfix history' })
-
--- vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
--- vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 vim.keymap.set('n', '<leader>ee', 'oif err != nil {<CR>}<Esc>Oreturn err<Esc>')
 
@@ -1173,7 +1179,11 @@ vim.keymap.set(
     "<leader>el",
     "oif err != nil {<CR>}<Esc>O.logger.Error(\"error\", \"error\", err)<Esc>F.;i"
 )
---
-vim.keymap.set('n', '<space>gb', function()
-  require('blame-column').toggle()
-end, { desc = 'Git: toggle blame' })
+
+vim.keymap.set('n', '<space>gB', '<CMD>GitBlameOpenCommitURL<CR>', { desc = 'open current commit url' })
+vim.keymap.set('n', '<space>gb', '<CMD>GitBlameToggle<CR>', { desc = 'Git: toggle blame' })
+vim.keymap.set('n', '<space>gc', '<CMD>GitBlameCopySHA<CR>', { desc = 'copies the SHA hash of current line commit into the system clipboard' })
+
+vim.keymap.set('n', '<space>gF', '<CMD>GitBlameOpenFileURL<CR>', { desc = 'opens the file in the default browser.' })
+vim.keymap.set('n', '<space>gf', '<CMD>GitBlameCopyFileURL<CR>', { desc = 'copies the file URL into the system clipboard' })
+
