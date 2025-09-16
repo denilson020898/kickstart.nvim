@@ -1187,3 +1187,6 @@ vim.keymap.set('n', '<space>gc', '<CMD>GitBlameCopySHA<CR>', { desc = 'copies th
 vim.keymap.set('n', '<space>gF', '<CMD>GitBlameOpenFileURL<CR>', { desc = 'opens the file in the default browser.' })
 vim.keymap.set('n', '<space>gf', '<CMD>GitBlameCopyFileURL<CR>', { desc = 'copies the file URL into the system clipboard' })
 
+vim.keymap.set('n', '<space>w', '<c-w>|', {})
+vim.keymap.set('n', '<space>e', '<c-w>=', {})
+
