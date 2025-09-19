@@ -1119,6 +1119,32 @@ vim.keymap.set({ 'n', 'v' }, '<leader>m', '<cmd>HopWord<cr>', { noremap = true }
 -- vim.keymap.set('n', '<space>sc', "viw:lua require('spectre').open_file_search()<cr>", { noremap = true })
 
 -- ###########
+-- vim.api.nvim_win_set_cursor(vim.fn.bufwinid(0), { 2, 0 })
+vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('grug-far-keymap', { clear = true }),
+  pattern = { 'grug-far' },
+  callback = function()
+    -- jump back to search input by hitting left arrow in normal mode:
+    -- vim.keymap.set('n', '<left>', function()
+    vim.keymap.set('n', '1', function()
+      vim.api.nvim_win_set_cursor(vim.fn.bufwinid(0), { 1, 0 })
+    end, { buffer = true })
+    vim.keymap.set('n', '2', function()
+      vim.api.nvim_win_set_cursor(vim.fn.bufwinid(0), { 2, 0 })
+    end, { buffer = true })
+    vim.keymap.set('n', '3', function()
+      vim.api.nvim_win_set_cursor(vim.fn.bufwinid(0), { 3, 0 })
+    end, { buffer = true })
+    vim.keymap.set('n', '4', function()
+      vim.api.nvim_win_set_cursor(vim.fn.bufwinid(0), { 4, 0 })
+    end, { buffer = true })
+    vim.keymap.set('n', '5', function()
+      vim.api.nvim_win_set_cursor(vim.fn.bufwinid(0), { 5, 0 })
+    end, { buffer = true })
+   -- ... whatever other keybinds you like :)
+  end,
+})
+
 vim.keymap.set('n', '<space>sw', function()
     require('grug-far').open({ prefills = { search = vim.fn.expand("<cword>") } })
 end, { noremap = true, desc = 'Launch with the current word under the cursor as the search string'})

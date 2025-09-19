@@ -9,8 +9,8 @@ return {
       -- options, see Configuration section below
       -- there are no required options atm
       startInInsertMode = false,
-      -- showCompactInputs = true,
-      windowCreationCommand = 'tab split',
+      showCompactInputs = true,
+      -- windowCreationCommand = 'tab split',
     }
   end,
 }
