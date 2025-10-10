@@ -928,16 +928,26 @@ require('lazy').setup({
   --   end,
   -- },
 
+  -- {
+  --   'sainnhe/gruvbox-material',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.g.gruvbox_material_background = 'hard'
+  --     vim.g.gruvbox_material_transparent_background = 1
+  --     vim.cmd.colorscheme 'gruvbox-material'
+  --   end,
+  -- },
   {
-    'sainnhe/gruvbox-material',
+    'cpea2506/one_monokai.nvim',
     lazy = false,
     priority = 1000,
     config = function()
-      vim.g.gruvbox_material_background = 'hard'
-      vim.g.gruvbox_material_transparent_background = 1
-      vim.cmd.colorscheme 'gruvbox-material'
+      vim.cmd.colorscheme 'one_monokai'
     end,
   },
+
+
 
   -- {
   --   'sainnhe/sonokai',
@@ -1145,12 +1155,14 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.keymap.set('n', '<space>sw', function()
+vim.keymap.set('n', '<space>w', function()
     require('grug-far').open({ prefills = { search = vim.fn.expand("<cword>") } })
 end, { noremap = true, desc = 'Launch with the current word under the cursor as the search string'})
 
 vim.keymap.set('n', '<space>s', function()
-  require('grug-far').open()
+  require('grug-far').open({
+    startInInsertMode = true,
+})
 end, { noremap = true, desc = 'grug far search' })
 
 -- lua require('grug-far').open({ prefills = { filesFilter= '\*.py *.xml *.js' } })
@@ -1215,8 +1227,8 @@ vim.keymap.set('n', '<space>gc', '<CMD>GitBlameCopySHA<CR>', { desc = 'copies th
 vim.keymap.set('n', '<space>gF', '<CMD>GitBlameOpenFileURL<CR>', { desc = 'opens the file in the default browser.' })
 vim.keymap.set('n', '<space>gf', '<CMD>GitBlameCopyFileURL<CR>', { desc = 'copies the file URL into the system clipboard' })
 
-vim.keymap.set('n', '<space>w', '<c-w>|', {})
-vim.keymap.set('n', '<space>e', '<c-w>=', {})
+-- vim.keymap.set('n', '<space>w', '<c-w>|', {})
+-- vim.keymap.set('n', '<space>e', '<c-w>=', {})
 
 -- vim.cmd.colorscheme 'lunaperche'
 --
