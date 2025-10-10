@@ -1155,13 +1155,31 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.keymap.set('n', '<space>w', function()
+vim.keymap.set('n', '<space>W', function()
     require('grug-far').open({ prefills = { search = vim.fn.expand("<cword>") } })
 end, { noremap = true, desc = 'Launch with the current word under the cursor as the search string'})
 
+vim.keymap.set('n', '<space>S', function()
+    require('grug-far').open({
+        startInInsertMode = true,
+})
+end, { noremap = true, desc = 'grug far search' })
+
+vim.keymap.set('n', '<space>w', function()
+    require('grug-far').open({ 
+        prefills = { 
+            search = vim.fn.expand("<cword>"),
+            flags = "-g !'**/tests/**' -g !*.po",
+        } 
+    })
+end, { noremap = true, desc = 'Launch with the current word under the cursor as the search string'})
+
 vim.keymap.set('n', '<space>s', function()
-  require('grug-far').open({
-    startInInsertMode = true,
+    require('grug-far').open({
+        startInInsertMode = true,
+            prefills = { 
+            flags = "-g !'**/tests/**' -g !*.po",
+        },
 })
 end, { noremap = true, desc = 'grug far search' })
 
