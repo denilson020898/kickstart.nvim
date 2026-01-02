@@ -797,7 +797,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         elixir = { 'mix' },
-        -- xml = { 'xmlformatter' },
+        xml = { 'xmlformat' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -928,24 +928,24 @@ require('lazy').setup({
   --   end,
   -- },
 
-  -- {
-  --   'sainnhe/gruvbox-material',
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     vim.g.gruvbox_material_background = 'hard'
-  --     vim.g.gruvbox_material_transparent_background = 1
-  --     vim.cmd.colorscheme 'gruvbox-material'
-  --   end,
-  -- },
   {
-    'cpea2506/one_monokai.nvim',
+    'sainnhe/gruvbox-material',
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'one_monokai'
+      vim.g.gruvbox_material_background = 'hard'
+      vim.g.gruvbox_material_transparent_background = 1
+      vim.cmd.colorscheme 'gruvbox-material'
     end,
   },
+  -- {
+  --   'cpea2506/one_monokai.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'one_monokai'
+  --   end,
+  -- },
 
 
 
@@ -1210,7 +1210,7 @@ vim.keymap.set('n', '<C-A-k>', '5<C-w>+', { noremap = true })
 vim.keymap.set('n', '<C-A-l>', '5<C-w>>', { noremap = true })
 
 vim.cmd 'autocmd Filetype javascript setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4'
-vim.cmd 'autocmd Filetype c setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2'
+vim.cmd 'autocmd Filetype c setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4'
 vim.cmd 'autocmd Filetype go setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4'
 vim.cmd 'autocmd Filetype xml setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4'
 vim.cmd 'autocmd Filetype lua setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4'
@@ -1253,3 +1253,6 @@ vim.keymap.set('n', '<space>gf', '<CMD>GitBlameCopyFileURL<CR>', { desc = 'copie
 -- highlight GrugFarResultsMatch ctermbg=#a9b665 guibg=#a9b665
 -- vim.api.nvim_set_hl(0, 'GrugFarResultsMatch', { bg = 'lime' })
 vim.api.nvim_set_hl(0, 'GrugFarResultsMatch', { bg = '#7b2c2f' })
+
+
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"

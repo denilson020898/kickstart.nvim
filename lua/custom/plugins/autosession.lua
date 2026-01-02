@@ -1,9 +1,12 @@
 return {
-  'rmagatti/auto-session',
-  config = function()
-    require('auto-session').setup {
-      log_level = 'error',
-      auto_session_suppress_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
-    }
-  end,
+  "rmagatti/auto-session",
+  lazy = false,
+
+  ---enables autocomplete for opts
+  ---@module "auto-session"
+  ---@type AutoSession.Config
+  opts = {
+    suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+    -- log_level = 'debug',
+  },
 }
