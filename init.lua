@@ -1257,3 +1257,6 @@ vim.api.nvim_set_hl(0, 'GrugFarResultsMatch', { bg = '#7b2c2f' })
 
 
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+
+vim.keymap.set('n', '<space>z', '<CMD>%bd|e#|bd#<CR>', { desc = 'delete all other buffer except this one' })
+
