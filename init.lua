@@ -1170,7 +1170,7 @@ vim.keymap.set('n', '<space>w', function()
     require('grug-far').open({ 
         prefills = { 
             search = vim.fn.expand("<cword>"),
-            flags = "-g !'**/tests/**' -g !*.po",
+            flags = "-g !**/tests/** -g !*.po",
         } 
     })
 end, { noremap = true, desc = 'Launch with the current word under the cursor as the search string'})
@@ -1179,7 +1179,7 @@ vim.keymap.set('n', '<space>s', function()
     require('grug-far').open({
         startInInsertMode = true,
             prefills = { 
-            flags = "-g !'**/tests/**' -g !*.po",
+            flags = "-g !**/tests/** -g !*.po",
         },
 })
 end, { noremap = true, desc = 'grug far search' })
